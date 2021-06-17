@@ -1,0 +1,36 @@
+.cont-logo{
+    text-align:center;
+    margin-top:1em;
+}
+.logo-header{
+    border:1px solid black;
+    font-size: 46px;
+    font-style: italic;
+    font-family: cursive;
+}
+.nav{
+    text-align: center;
+    margin-bottom: 2em;
+}
+.onglets{
+    cursor: pointer;
+}
+
+a{
+    color:inherit;
+}
+a:link{
+    text-decoration:none;
+}
+
+div[role="dialog"]{
+    width: 33em!important;
+    height: 20em!important;
+}
+
+.my{
+    border : 1px solid grey;
+    text-align: center;
+    border-radius: 1em;
+    width: 10em;
+}
