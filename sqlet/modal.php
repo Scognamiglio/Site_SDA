@@ -1,8 +1,8 @@
 <div id="dialog" title="Inscription" style="display: none">
 
     <p>L'inscription serra envoyé directement à l'utilisateur relié à l'identifiant indiqué dans le champ texte (ex : 236245509575016451)</p>
-    <input name="id"></br>
-    </br>
+    <input name="id"><br>
+    <br>
     <button id="go">Inscription !</button>
 
 </div>
@@ -20,7 +20,7 @@
             <td><label>password</label></td><td><input name="psw"><br></td>
         </tr>
     </table>
-    <br/>
+    <br>
     <button id="go">Connexion !</button>
 
 </div>

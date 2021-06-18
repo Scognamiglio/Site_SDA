@@ -74,9 +74,9 @@ $('#dialog > #go').click(function () {
         if(json[0] == "erreur"){
             alert(decodeHtml(json[1]))
         }else if(json[0] == "success"){
-            $( "#dialog" ).html('Bien joué !</br> Tu devrais bientôt recevoir ton mot de passe de la part de ton ami le bot ! ' +
-                '</br> Dans le cas contraire utilise la commande !register sur le bot. ' +
-                '</br>En cas de problème double demande à Zheneos')
+            $( "#dialog" ).html('Bien joué !<br> Tu devrais bientôt recevoir ton mot de passe de la part de ton ami le bot ! ' +
+                '<br> Dans le cas contraire utilise la commande !register sur le bot. ' +
+                '<br>En cas de problème double demande à Zheneos')
         }
     })
 })
