@@ -47,13 +47,6 @@ $('.spoiler').click(function () {
 })
 
 
-
-
-
-
-
-
-
 $(".register").click(function() {
     $( "#dialog" ).dialog();
 });
@@ -61,7 +54,6 @@ $(".register").click(function() {
 $(".login").click(function() {
     $( "#popin_login" ).dialog();
 });
-
 
 
 $('#dialog > #go').click(function () {
@@ -102,20 +94,3 @@ $('#popin_login > #go').click(function () {
         }
     })
 })
-
-
-
-
-function decodeHtml(html) {
-    var txt = document.createElement("textarea");
-    txt.innerHTML = html;
-    return txt.value;
-}
-
-
-
-function setCookie(name, value, days) {
-    var d = new Date;
-    d.setTime(d.getTime() + 24*60*60*1000*days);
-    document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
-}

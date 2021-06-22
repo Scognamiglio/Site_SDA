@@ -28,18 +28,14 @@ if(in_array($page,scandir("action"))){
 
         <?php
         include "sqlet/header.php";
+        include "sqlet/modal.php";
+        ?>
+        <script type="text/javascript" src="script/methode.js"></script>
+        <?php
         if(in_array($page,scandir("module"))){
             include "module/$page";
         }
-
-
-        include "sqlet/modal.php";
         ?>
-
-
-
-
-
-        <script type="text/javascript" src="script/main.js"></script>
+        <script type="text/javascript" src="script/listener.js"></script>
     </body>
 </html>
