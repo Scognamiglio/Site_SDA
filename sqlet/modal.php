@@ -24,3 +24,9 @@
     <button id="go">Connexion !</button>
 
 </div>
+
+<div id="popin_info" title="Information" style="display: none">
+
+    <p id="popinInfoChange">abc</p>
+
+</div>
