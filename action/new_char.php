@@ -39,8 +39,25 @@ function genereSelect($type){
 
 }
 
-if(isset($_POST['act']) && $_POST['act']=='getTitle'){
-    if(isset($selectAndOption[$_POST['id']][$_POST['value']]))
-    retour([isset($selectAndOption[$_POST['id']][$_POST['value']]) ? $selectAndOption[$_POST['id']][$_POST['value']] : '']);
+if(isset($_POST['act'])){
+    switch ($_POST['act']){
+        case "getTitle":
+            retour([isset($selectAndOption[$_POST['id']][$_POST['value']]) ? $selectAndOption[$_POST['id']][$_POST['value']] : '']);
+            break;
+        case "setData":
+            $val = $_POST['value'];
+            $label = $_POST['label'];
+            if(empty($val))
+                retour(['erreur',"la donnée est vide."]);
+            if($label=="name"){
+                $sql = "select 1 from perso where prenom like '".explode(' ',$val)[0]."%'";
+                if($bdd->query($sql)->fetch()){
+                    retour(['erreur','Le premier mot de votre prénom est déjà utilisé.']);
+                }
+            }
+            retour(['success',$_POST['value']]);
+            break;
+
+    }
 
 }

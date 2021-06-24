@@ -27,11 +27,35 @@ $(".step-5").fadeOut(0);
 
 var t
 $('input,select,textarea').change(function (){
-    $step = $(this).parent().parent().attr('class')
+
+    t = $(this)
+    $.ajax({
+        url : 'index.php?page=new_char', // La ressource ciblée
+        type : 'POST', // Le type de la requête HTTP.
+        data : {
+            act: 'setData',
+            label: $(this).attr('name'),
+            value: $(this).val()
+        }
+    }).done(function ($r) {
+        json = JSON.parse($r)
+        if(json[0] == "erreur"){
+            t.addClass('error');
+        }else{
+            t.removeClass('error');
+            checkActiveStep(t);
+        }
+    });
+})
+
+function checkActiveStep($t){
+    $step = $t.parent().parent().attr('class')
     if($step == null){
-        $step = $(this).parent().parent().parent().attr('class')
+        $step = $t.parent().parent().parent().attr('class')
     }
+
     $nextStep="step-"+(parseInt($step[$step.length-1],10)+1)
+
     if($('.'+$nextStep+'[style*="display: none"]').length > 0){
         test = true;
         $('.'+$step).find('input,select,textarea').each(function( index ) {
@@ -43,4 +67,4 @@ $('input,select,textarea').change(function (){
             $('.'+$nextStep).fadeIn(0);
         }
     }
-})
+}
