@@ -1,0 +1,58 @@
+.TheSelect,input{
+    width: 100%;
+}
+
+body{
+    text-align: center;
+}
+
+table{
+    margin-left : auto;
+    margin-right : auto;
+    width: 25em;
+}
+
+tr > td:nth-child(1){
+    width: 7em;
+}
+tr > td:nth-child(2){
+    width: 14em;
+}
+tr > td:nth-child(3){
+    width: 4em;
+}
+
+
+
+h3{
+    margin-top: 1em;
+    margin-left : auto;
+    margin-right : auto;
+    border: 1px black solid;
+    width: 15em;
+    border-radius: 3em;
+    padding-bottom: 0.1em;
+    border-left: 1em #8219D5 solid;
+    border-right: 1em #8219D5 solid;
+    text-align: center;
+}
+
+textarea{
+    width: 20em;
+    height: 5em;
+}
+
+div[role="dialog"][aria-describedby="popin_info"]{
+    width: 30em!important;
+    height: 7em!important;
+}
+
+.info{
+    padding-left: 0.5em;
+}
+
+#show-story{
+    width: 25em;
+    margin-left: auto;
+    margin-right: auto;
+}

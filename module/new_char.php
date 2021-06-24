@@ -1,29 +1,4 @@
-<style>
-    .TheSelect{
-        width: 100%;
-    }
-
-    h3{
-        border: 1px black solid;
-        width: 10em;
-        border-radius: 3em;
-        padding-bottom: 0.1em;
-        border-left: 1em #8219D5 solid;
-        border-right: 1em #8219D5 solid;
-        text-align: center;
-    }
-
-    div[role="dialog"][aria-describedby="popin_info"]{
-        width: 30em!important;
-        height: 7em!important;
-    }
-
-    .info{
-        padding-left: 0.5em;
-    }
-</style>
-
-
+<link href="styles/new_char.css" rel="stylesheet" type="text/css">
 <?php
 
 if(!empty($_SESSION['idPerso'])){
@@ -31,65 +6,80 @@ if(!empty($_SESSION['idPerso'])){
     // Rajouter une vérif si le personnage existe déjà
     ?>
         <h3 class="spoiler" name="show-gene">générale</h3>
-        <table id="show-gene" style="display: none">
-            <tr>
+        <table id="show-gene">
+
+
+            <tr class="step-1">
                 <td><label>Ton Identité</label></td><td><input name="name" placeholder="Zheneos Hikari"></td>
+                <td></td>
             </tr>
-            <tr>
-                <td><label>Ton âge</label></td><td><input name="age" placeholder="21"></td>
+            <tr class="step-1">
+                <td><label>Ton âge</label></td><td><input name="age" type="number" placeholder="21"></td>
+                <td></td>
             </tr>
-            <tr>
+            <tr class="step-1">
                 <td><label>Ton genre</label></td><td><?=genereSelect('genre')?></td>
+                <td></td>
             </tr>
-            <tr>
+
+
+            <tr class="step-2">
                 <td><label>Voie physique</label></td><td><?=genereSelect('vPhysique')?></td>
                 <td><a class="info" id="vPhysique">info</a></td>
             </tr>
-            <tr>
+            <tr class="step-2">
                 <td><label>Voie magique</label></td><td><?=genereSelect('vMagique')?></td>
                 <td><a class="info" id="vMagique">info</a></td>
             </tr>
-            <tr>
+
+
+            <tr class="step-3">
                 <td><label>Ta race</label></td><td><input name="race" placeholder="Humain"></td>
             </tr>
         </table>
-    </br>
-    <h3 class="spoiler" name="show-perso">Personnalité</h3>
-    <span id="show-perso" style="display: none">
-        <label>Décrit nous rapidement ta personnalité (Limité à 2000 caractères)</label>
-        <br>
-        <textarea></textarea>
-        <br><br>
-        <label>Ton objectif ?</label>
-        <br>
-        <textarea name="objectif" placeholder="Devenir un grand magicien et tous savoir du monde"></textarea>
-        <br>
+
+    <span class="step-4">
+        </br>
+        <h3 class="spoiler" name="show-perso">Personnalité</h3>
+        <span id="show-perso">
+            <label>Décrit nous rapidement ta personnalité (Limité à 2000 caractères)</label>
+            <br>
+            <textarea></textarea>
+            <br><br>
+            <label>Ton objectif ?</label>
+            <br>
+            <textarea name="objectif" placeholder="Devenir un grand magicien et tous savoir du monde"></textarea>
+            <br>
+        </span>
     </span>
-    <br>
-    <h3 class="spoiler" name="show-story">Histoire</h3>
-    <span id="show-story">
+
+    <span class="step-5">
         <br>
-        <p>Il faudra séparé ton histoire en chapitre de maximum 2000 caractères (Il est possible de n'avoir qu'un seul chapitre)</p>
-        <br>
-        <input name="Title" placeholder="enfance">
-        <br>
-        <strong class="spoiler" name="show-story-0">Voir</strong>
-        <div id="show-story-0" style="display: none">
-            <textarea></textarea>
-        </div>
-        <br>
-        <input name="Title" placeholder="enfance">
-        <br>
-        <strong class="spoiler" name="show-story-1">Voir</strong>
-        <div id="show-story-1" style="display: none">
-            <textarea></textarea>
-        </div>
-        <br>
-        <input name="Title" placeholder="enfance">
-        <br>
-        <strong class="spoiler" name="show-story-2">Voir</strong>
-        <div id="show-story-2" style="display: none">
-            <textarea></textarea>
+        <h3 class="spoiler" name="show-story">Histoire</h3>
+        <div id="show-story">
+            <br>
+            <p>Il faudra séparé ton histoire en chapitre de maximum 2000 caractères (Il est possible de n'avoir qu'un seul chapitre)</p>
+            <br>
+            <input name="Title" placeholder="enfance">
+            <br>
+            <strong class="spoiler" name="show-story-0">Voir</strong>
+            <div id="show-story-0" style="display: none">
+                <textarea></textarea>
+            </div>
+            <br>
+            <input name="Title" placeholder="enfance">
+            <br>
+            <strong class="spoiler" name="show-story-1">Voir</strong>
+            <div id="show-story-1" style="display: none">
+                <textarea></textarea>
+            </div>
+            <br>
+            <input name="Title" placeholder="enfance">
+            <br>
+            <strong class="spoiler" name="show-story-2">Voir</strong>
+            <div id="show-story-2" style="display: none">
+                <textarea></textarea>
+            </div>
         </div>
     </span>
 

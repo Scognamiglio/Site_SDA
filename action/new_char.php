@@ -1,5 +1,6 @@
 <?php
 
+// Passer sa en base de données ?
 $selectAndOption = [
     'genre' => [
         'Homme' => 'Homme',
@@ -27,7 +28,7 @@ function genereSelect($type){
     global $selectAndOption;
     $ret = "";
     if(!empty($selectAndOption[$type])){
-        $ret = "<select class='TheSelect' name='$type'>";
+        $ret = "<select class='TheSelect' name='$type'><option value=''>Choisis</option>";
         foreach ($selectAndOption[$type] as $option=>$title){
             $ret .= "<option value='$option' ".(!empty($title) ? "title='$title'" : "").">$option</option>";
         }
