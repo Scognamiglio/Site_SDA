@@ -6,31 +6,23 @@ $selectAndOption = [
         'Homme' => 'Homme',
         'Femme' => 'Femme',
         'Autre' => 'Autre'
-    ],
-    'vPhysique' => [
-        'Tranchante' => 'Peu d&#39;attaque de groupe, consommation légère, bon dégâts.&#10;Ex : épée, dague, faux et etc...',
-        'Contondante' => '',
-        'Projectile' => '',
-        'Longue' => ''
-    ],
-    'vMagique' => [
-        'Eau' => '',
-        'Feu'=> '',
-        'Terre'=> '',
-        'Vent'=> '',
-        'Foudre'=> '',
-        'Ténèbres'=> '',
-        'Lumière'=> ''
-    ],
+    ]
 ];
+
+$sql = "select label,value from botExtra where label in ('vPhysique','vMagique','race')";
+foreach ($bdd->query($sql)->fetchAll() as $json){
+    $selectAndOption[$json['label']] = json_decode($json['value'],true);
+}
+
 
 function genereSelect($type){
     global $selectAndOption;
     $ret = "";
+    $rep = function ($a){return str_replace(["'","<br>"],['&#39;','&#10;'],$a);};
     if(!empty($selectAndOption[$type])){
         $ret = "<select class='TheSelect' name='$type'><option value=''>Choisis</option>";
         foreach ($selectAndOption[$type] as $option=>$title){
-            $ret .= "<option value='$option' ".(!empty($title) ? "title='$title'" : "").">$option</option>";
+            $ret .= "<option value='$option' title='".$rep($title)."'>$option</option>";
         }
         $ret .= "</select>";
     }
@@ -38,6 +30,7 @@ function genereSelect($type){
     return $ret;
 
 }
+
 
 if(isset($_POST['act'])){
     switch ($_POST['act']){

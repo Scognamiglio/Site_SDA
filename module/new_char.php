@@ -34,7 +34,8 @@ if(!empty($_SESSION['idPerso'])){
 
 
             <tr class="step-3">
-                <td><label>Ta race</label></td><td><input name="race" placeholder="Humain"></td>
+                <td><label>Ta race</label></td><td><?=genereSelect('race')?></td>
+                <td><a class="info" id="race">info</a></td>
             </tr>
         </table>
 
