@@ -18,23 +18,27 @@ if(!empty($_SESSION['idPerso'])){
                 <td></td>
             </tr>
             <tr class="step-1">
-                <td><label>Ton genre</label></td><td><?=genereSelect('genre')?></td>
+                <td><label>Ton genre</label></td><td><?=SelectFor('genre')?></td>
                 <td></td>
             </tr>
 
 
             <tr class="step-2">
-                <td><label>Voie physique</label></td><td><?=genereSelect('vPhysique')?></td>
+                <td><label>Classe</label></td><td><?=SelectFor('classe')?></td>
+                <td><a class="info" id="classe">info</a></td>
+            </tr>
+            <tr class="step-2">
+                <td><label>Voie physique</label></td><td><?=SelectFor('vPhysique')?></td>
                 <td><a class="info" id="vPhysique">info</a></td>
             </tr>
             <tr class="step-2">
-                <td><label>Voie magique</label></td><td><?=genereSelect('vMagique')?></td>
+                <td><label>Voie magique</label></td><td><?=SelectFor('vMagique')?></td>
                 <td><a class="info" id="vMagique">info</a></td>
             </tr>
 
 
             <tr class="step-3">
-                <td><label>Ta race</label></td><td><?=genereSelect('race')?></td>
+                <td><label>Ta race</label></td><td><?=SelectFor('race')?></td>
                 <td><a class="info" id="race">info</a></td>
             </tr>
         </table>

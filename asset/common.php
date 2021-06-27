@@ -5,10 +5,14 @@ header('Content-Type: text/html; charset=utf-8');
 include "../conf.php";
 
 function retour($a){
-    foreach ($a as $k=>$v)
-        $a[$k] = htmlentities($v);
+    $htmlRecur = function ($tab) use (&$htmlRecur){
+        foreach ($tab as $k => $v){
+            $tab[$k] = (is_array($v)) ? $htmlRecur($v) : htmlentities($v);
+        }
+        return $tab;
+    };
 
-    echo json_encode($a, JSON_FORCE_OBJECT);
+    echo json_encode($htmlRecur($a), JSON_FORCE_OBJECT);
     die();
 }
 

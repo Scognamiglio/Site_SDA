@@ -44,7 +44,7 @@ textarea{
 
 div[role="dialog"][aria-describedby="popin_info"]{
     width: 30em!important;
-    height: 7em!important;
+    height: auto!important;
 }
 
 .info{
@@ -59,4 +59,8 @@ div[role="dialog"][aria-describedby="popin_info"]{
 
 .error{
     border-color: red;
+}
+
+.not{
+    display: none;
 }

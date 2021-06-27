@@ -28,21 +28,39 @@ $(".step-5").fadeOut(0);
 var t
 $('input,select,textarea').change(function (){
 
+    tabV = {
+        vPhysique : 'vMagique',
+        vMagique : 'vPhysique'
+    }
     t = $(this)
+    name = t.attr('name');
+
+    data = {
+        act: 'setData',
+        label: name,
+        value: $(this).val()
+    }
+
+    if(tabV.hasOwnProperty(name) && $('select[name="'+tabV[name]+'"]').val() != ''){
+        data["otherVoie"] = $('select[name="'+tabV[name]+'"]').val()
+    }
+
     $.ajax({
         url : 'index.php?page=new_char', // La ressource ciblée
         type : 'POST', // Le type de la requête HTTP.
-        data : {
-            act: 'setData',
-            label: $(this).attr('name'),
-            value: $(this).val()
-        }
+        data : data
     }).done(function ($r) {
         json = JSON.parse($r)
         if(json[0] == "erreur"){
             t.addClass('error');
         }else{
             t.removeClass('error');
+            if(typeof json[1]==="object"){
+                tab = Object.values(json[1]).map(x => htmlDecode(x))
+                $('select[name="race"] > option').each(function(i){if(tab.indexOf($(this).val().toLowerCase())!=-1){$(this).removeClass('not')}else{$(this).addClass('not')}})
+                $('select[name="race"]').val("");
+            }
+
             checkActiveStep(t);
         }
     });
