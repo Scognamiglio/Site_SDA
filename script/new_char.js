@@ -1,3 +1,4 @@
+var t
 
 $(".info").click(function() {
     id = $(this).attr('id');
@@ -25,20 +26,21 @@ $(".step-4").fadeOut(0);
 $(".step-5").fadeOut(0);
 
 
-var t
-$('input,select,textarea').change(function (){
+
+function changeValue(cible){
 
     tabV = {
         vPhysique : 'vMagique',
         vMagique : 'vPhysique'
     }
-    t = $(this)
+    t = cible
+    console.log(t);
     name = t.attr('name');
 
     data = {
         act: 'setData',
         label: name,
-        value: $(this).val()
+        value: cible.val()
     }
 
     if(tabV.hasOwnProperty(name) && $('select[name="'+tabV[name]+'"]').val() != ''){
@@ -64,13 +66,12 @@ $('input,select,textarea').change(function (){
             checkActiveStep(t);
         }
     });
-})
+}
+
+$('input,select,textarea').change(function (){changeValue($(this))});
 
 function checkActiveStep($t){
-    $step = $t.parent().parent().attr('class')
-    if($step == null){
-        $step = $t.parent().parent().parent().attr('class')
-    }
+    $step = $t.closest('*[class^="step-"]').attr('class')
 
     $nextStep="step-"+(parseInt($step[$step.length-1],10)+1)
 
@@ -86,3 +87,44 @@ function checkActiveStep($t){
         }
     }
 }
+
+$('#newChap').click(() => {
+    addChapStory();
+});
+
+function addChapStory(listerner = true){
+    i = $('#TheSpanForStory > input[name^="title-story-').length
+    if(i<10){
+        $('#TheSpanForStory').find('div[id^="show-story-"]').css("display","none")
+        html = $('#tpl_story').html().replaceAll("story-x","story-"+i);
+        $('#TheSpanForStory').append(html)
+
+        if(listerner){
+            $('strong[name="show-story-'+i+'"]').click(function (){spoiler($(this))})
+            $('textarea[name="text-story-'+i+'"]').change(function () {changeValue($(this))})
+        }
+
+    }else{
+        $('#newChap').html("Limite de chapitre atteinte.").addClass('errorButton');
+    }
+}
+
+
+$('#deleteChap').click(() => {
+    deleteChapStory();
+});
+
+function deleteChapStory(){
+    i = $('#TheSpanForStory > input[name^="title-story-').length
+    if(i>0){
+        $('input[name="title-story-'+(i-1)+'"]').nextAll().remove()
+        $('input[name="title-story-'+(i-1)+'"]').remove();
+
+        // Ajouté un check
+        $('#newChap').html("Nouveau chapitre").removeClass('errorButton');
+    }
+}
+
+
+// Créer un premier bloc story
+addChapStory(false);

@@ -3,15 +3,17 @@ var arrayMemShow = [];
 
 var test; // à utiliser pour tester des variables dans la console.
 
-
-$('[class^="onglets-"]').click(function () {
-    nameOnglets =  $(this).attr('class').split('onglets-')[1].split(" ")[0]
-    ongletOn = $(this).attr('name');
+function onglet(cible){
+    nameOnglets =  cible.attr('class').split('onglets-')[1].split(" ")[0]
+    ongletOn = cible.attr('name');
 
     $('.'+nameOnglets+" > *").each(function () {
         $(this).css('display',($(this).attr("id")==ongletOn) ? 'block' : 'none');
     })
+}
 
+$('[class^="onglets-"]').click(function () {
+    onglet($(this))
 })
 
 $('[id^="actif-"]').hover(function() {
@@ -41,9 +43,11 @@ $('[id^="actif-"]').click(function() {
 
 
 
-
+function spoiler(cible){
+    $('#'+cible.attr("name")).fadeToggle();
+}
 $('.spoiler').click(function () {
-    $('#'+$(this).attr("name")).fadeToggle();
+    spoiler($(this))
 })
 
 

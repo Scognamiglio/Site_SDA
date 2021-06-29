@@ -4,6 +4,7 @@
 
 body{
     text-align: center;
+    padding-bottom: 2em;
 }
 
 table{
@@ -51,7 +52,7 @@ div[role="dialog"][aria-describedby="popin_info"]{
     padding-left: 0.5em;
 }
 
-#show-story{
+#show-cat-story{
     width: 25em;
     margin-left: auto;
     margin-right: auto;
@@ -63,4 +64,17 @@ div[role="dialog"][aria-describedby="popin_info"]{
 
 .not{
     display: none;
+}
+
+.errorButton{
+    border-color: darkred;
+    background-color: red;
+    color: white;
+}
+
+.buttonDelete{
+    margin-left: 100%;
+    border-radius: 3em;
+    border: none;
+    background-color: red;
 }

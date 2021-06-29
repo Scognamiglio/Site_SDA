@@ -60,32 +60,30 @@ if(!empty($_SESSION['idPerso'])){
 
     <span class="step-5">
         <br>
-        <h3 class="spoiler" name="show-story">Histoire</h3>
-        <div id="show-story">
-            <br>
+        <h3 class="spoiler" name="show-cat-story">Histoire</h3>
+        <div id="show-cat-story">
             <p>Il faudra séparé ton histoire en chapitre de maximum 2000 caractères (Il est possible de n'avoir qu'un seul chapitre)</p>
+            <button id="newChap">Nouveau chapitre</button>
             <br>
-            <input name="Title" placeholder="enfance">
             <br>
-            <strong class="spoiler" name="show-story-0">Voir</strong>
-            <div id="show-story-0" style="display: none">
-                <textarea></textarea>
-            </div>
-            <br>
-            <input name="Title" placeholder="enfance">
-            <br>
-            <strong class="spoiler" name="show-story-1">Voir</strong>
-            <div id="show-story-1" style="display: none">
-                <textarea></textarea>
-            </div>
-            <br>
-            <input name="Title" placeholder="enfance">
-            <br>
-            <strong class="spoiler" name="show-story-2">Voir</strong>
-            <div id="show-story-2" style="display: none">
-                <textarea></textarea>
-            </div>
+            <span id="TheSpanForStory">
+
+            </span>
+            <button id="deleteChap" class="buttonDelete">X</button>
         </div>
+        <br>
+    </span>
+
+
+    <!-- Un tpl pour créer dynamiquement les champs pour l'histoire -->
+    <span id="tpl_story" class="not">
+        <input name="title-story-x" placeholder="enfance">
+        <br>
+        <strong class="spoiler" name="show-story-x">Voir</strong>
+        <div id="show-story-x">
+            <textarea name="text-story-x"></textarea>
+        </div>
+        <br>
     </span>
 
     <script type="text/javascript" src="script/new_char.js"></script>
