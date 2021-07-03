@@ -7,15 +7,7 @@ var forceValue = {};
 
 //<Action>//
 if(!debug){
-    $(".step-2").fadeOut(0);
-    $(".step-3").fadeOut(0);
-    $(".step-4").fadeOut(0);
-    $(".step-5").fadeOut(0);
-    $(".step-6").fadeOut(0);
-    $(".step-7").fadeOut(0);
-    $(".step-8").fadeOut(0);
-    $(".step-9").fadeOut(0);
-    $(".step-10").fadeOut(0);
+    $('*[class^="step-"]:not(.step-1)').fadeOut(0);
 }
 
 addChapStory(false);
@@ -77,11 +69,8 @@ function changeValue(cible){
     }).done(function ($r) {
         json = JSON.parse($r)
         name = t.attr('name');
-        if(forceValue.hasOwnProperty(name) && forceValue[name] == false){
-            json[0] = "erreur";
-        }
 
-        if(json[0] == "erreur"){
+        if(json[0] == "erreur" || forceValue.hasOwnProperty(name) && forceValue[name] == false){
             t.addClass('error');
         }else{
             t.removeClass('error');
@@ -92,6 +81,12 @@ function changeValue(cible){
             }
 
             checkActiveStep(t);
+        }
+
+        val = t.val();
+        step = t.closest('*[class^="step-"]').attr('class')
+        if(val!=""){
+            setCookie(step+":"+name,val,15);
         }
     });
 }

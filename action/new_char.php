@@ -24,6 +24,20 @@ $sql = "select label,value from botExtra where label='raceByVoie'";
 $raceByVoie = json_decode($bdd->query($sql)->fetch()['value'],true);
 
 
+## Traitement data en mémoire. ##
+// Query //
+
+
+$finalStep = 1;
+$dataUseDefault = [];
+foreach ($_COOKIE as $label => $val){
+    if(strpos($label,"step") ===0){
+        $ls = explode(":",$label);
+        $dataUseDefault[$ls[1]] = $val;
+    }
+}
+
+
 if(isset($_POST['act'])){
     switch ($_POST['act']){
         case "getTitle":
@@ -90,12 +104,13 @@ function SelectFor($type){
 }
 
 function genereSelect($array,$name){
-
+    global $dataUseDefault;
     $rep = function ($a){return str_replace(["'","<br>"],['&#39;','&#10;'],$a);};
 
     $ret = "<select class='TheSelect' name='$name'><option value='' style='display: none'>Choisis</option>";
     foreach ($array as $option=>$title){
-        $ret .= "<option value='$option' title='".$rep($title)."'>$option</option>";
+        $ckeck = isset($dataUseDefault[$name]) && $option==$dataUseDefault[$name] ? 'selected' : '';
+        $ret .= "<option value='$option' title='".$rep($title)."' $ckeck>$option</option>";
     }
     $ret .= "</select>";
 

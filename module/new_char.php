@@ -10,11 +10,11 @@ if(!empty($_SESSION['idPerso'])){
 
 
             <tr class="step-1">
-                <td><label>Ton Identité</label></td><td><input name="name" placeholder="Zheneos Hikari"></td>
+                <td><label>Ton Identité</label></td><td><input name="name" placeholder="Zheneos Hikari" <?=(isset($dataUseDefault['name'])) ? "value='{$dataUseDefault['name']}'" : ""?> ></td>
                 <td></td>
             </tr>
             <tr class="step-1">
-                <td><label>Ton âge</label></td><td><input name="age" type="number" placeholder="21"></td>
+                <td><label>Ton âge</label></td><td><input name="age" type="number" placeholder="21" <?=(isset($dataUseDefault['age'])) ? "value='{$dataUseDefault['age']}'" : ""?>></td>
                 <td></td>
             </tr>
             <tr class="step-1">
