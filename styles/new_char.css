@@ -39,8 +39,8 @@ h3{
 }
 
 textarea{
-    width: 20em;
-    height: 5em;
+    width: 35em;
+    height: 10em;
 }
 
 div[role="dialog"][aria-describedby="popin_info"]{
@@ -53,7 +53,7 @@ div[role="dialog"][aria-describedby="popin_info"]{
 }
 
 #show-cat-story{
-    width: 25em;
+    width: 34em;
     margin-left: auto;
     margin-right: auto;
 }
@@ -77,4 +77,30 @@ div[role="dialog"][aria-describedby="popin_info"]{
     border-radius: 3em;
     border: none;
     background-color: red;
+}
+
+input[name^="title-story-"]{
+    width: 40%!important;
+}
+
+
+
+/* Retiré les flèches du selecteur de nombre pour éviter l'harcellement de requète */
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Chrome */
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin:0;
+}
+
+/* Opéra*/
+input::-o-inner-spin-button,
+input::-o-outer-spin-button {
+    -o-appearance: none;
+    margin:0
 }

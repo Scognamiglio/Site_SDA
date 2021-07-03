@@ -29,6 +29,13 @@ if(isset($_POST['act'])){
         case "getTitle":
             retour([isset($selectAndOption[$_POST['id']][$_POST['value']]) ? $selectAndOption[$_POST['id']][$_POST['value']] : '']);
             break;
+
+        case "deleteChap":
+            $sql = "delete from ficheData where idPerso ='{$_SESSION['idPerso']}' and label like '%story-{$_POST['id']}'";
+            var_dump($sql);
+            $bdd->query($sql);
+            retour(['success']);
+            break;
         case "setData":
             $val = $_POST['value'];
             $label = $_POST['label'];
@@ -42,6 +49,10 @@ if(isset($_POST['act'])){
             }
             $myRetour = $_POST['value'];
             $myRetour = empty($_POST['otherVoie']) ? $myRetour : selectRace([$myRetour,$_POST['otherVoie']]);
+            // Enregistre la données.
+            $sql = "insert into ficheData values ('{$_SESSION['idPerso']}','$label','$val',now()) ON DUPLICATE KEY UPDATE VALUE='$val',dateInsert=NOW()";
+            $bdd->query($sql);
+
             retour(['success',$myRetour]);
             break;
 

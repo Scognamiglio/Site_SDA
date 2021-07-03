@@ -1,5 +1,29 @@
 var t
 
+debug = true;
+
+var forceValue = {};
+
+
+//<Action>//
+if(!debug){
+    $(".step-2").fadeOut(0);
+    $(".step-3").fadeOut(0);
+    $(".step-4").fadeOut(0);
+    $(".step-5").fadeOut(0);
+    $(".step-6").fadeOut(0);
+    $(".step-7").fadeOut(0);
+    $(".step-8").fadeOut(0);
+    $(".step-9").fadeOut(0);
+    $(".step-10").fadeOut(0);
+}
+
+addChapStory(false);
+//</Action>//
+
+//<Listener>//
+$('input,select,textarea').change(function (){changeValue($(this))});
+$('#newChap').click(() => {addChapStory();});
 $(".info").click(function() {
     id = $(this).attr('id');
     value = $('select[name="'+id+'"]').val()
@@ -18,12 +42,11 @@ $(".info").click(function() {
         $( "#popin_info" ).dialog();
     });
 });
+$('#deleteChap').click(() => {deleteChapStory();});
+$('textarea').keyup(function (){nmbCaraArea($(this))})
+//</Listener>//
 
 
-$(".step-2").fadeOut(0);
-$(".step-3").fadeOut(0);
-$(".step-4").fadeOut(0);
-$(".step-5").fadeOut(0);
 
 
 
@@ -53,6 +76,11 @@ function changeValue(cible){
         data : data
     }).done(function ($r) {
         json = JSON.parse($r)
+        name = t.attr('name');
+        if(forceValue.hasOwnProperty(name) && forceValue[name] == false){
+            json[0] = "erreur";
+        }
+
         if(json[0] == "erreur"){
             t.addClass('error');
         }else{
@@ -67,8 +95,6 @@ function changeValue(cible){
         }
     });
 }
-
-$('input,select,textarea').change(function (){changeValue($(this))});
 
 function checkActiveStep($t){
     $step = $t.closest('*[class^="step-"]').attr('class')
@@ -88,9 +114,9 @@ function checkActiveStep($t){
     }
 }
 
-$('#newChap').click(() => {
-    addChapStory();
-});
+
+
+
 
 function addChapStory(listerner = true){
     i = $('#TheSpanForStory > input[name^="title-story-').length
@@ -102,6 +128,8 @@ function addChapStory(listerner = true){
         if(listerner){
             $('strong[name="show-story-'+i+'"]').click(function (){spoiler($(this))})
             $('textarea[name="text-story-'+i+'"]').change(function () {changeValue($(this))})
+            $('input[name="title-story-'+i+'"]').change(function () {changeValue($(this))})
+            $('textarea[name="text-story-'+i+'"]').keyup(function (){nmbCaraArea($(this))})
         }
 
     }else{
@@ -110,21 +138,60 @@ function addChapStory(listerner = true){
 }
 
 
-$('#deleteChap').click(() => {
-    deleteChapStory();
-});
-
 function deleteChapStory(){
     i = $('#TheSpanForStory > input[name^="title-story-').length
-    if(i>0){
+    if(i>1){
         $('input[name="title-story-'+(i-1)+'"]').nextAll().remove()
         $('input[name="title-story-'+(i-1)+'"]').remove();
 
         // Ajouté un check
         $('#newChap').html("Nouveau chapitre").removeClass('errorButton');
+
+        t = 0;$('#TheSpanForStory').find('textarea').each(function(){t +=$(this).val().length})
+        $('#total').html( "Total : "+t+" caractères"+((t < 2000) ? ' (Minimum 2000)' : ''))
+
+        $.ajax({
+            url : 'index.php?page=new_char', // La ressource ciblée
+            type : 'POST', // Le type de la requête HTTP.
+            data : {
+                act: 'deleteChap',
+                id: (i-1)
+            }
+        })
     }
 }
 
 
-// Créer un premier bloc story
-addChapStory(false);
+
+function nmbCaraArea($t){
+        id = $t.attr('id');
+        maxlength = $t.attr('maxlength');
+        minlength = $t.attr('minlength');
+        name = $t.attr('name');
+        length = $t.val().length;
+        ret = "";
+        forceValue[name] = true;
+        if(length < minlength){
+            forceValue[name] = false;
+            ret = "Il manque encore "+(minlength-length)+" caractères";
+        }else if(length > maxlength){
+            forceValue[name] = false;
+            ret = "Il y'a "+(length-maxlength)+" caractères en trop";
+        }else if(length > maxlength-200){
+            ret = "Encore "+(maxlength-length)+" caractères possible";
+        }
+        idSpan = id.split('_')[0]+'_c'
+        if(ret==""){
+            $('#'+idSpan).addClass('not');
+        }else{
+            $('#'+idSpan).html(ret);
+            $('#'+idSpan).removeClass('not');
+        }
+
+
+        if(name.startsWith("text-story")){
+            t = 0;$('#TheSpanForStory').find('textarea').each(function(){t +=$(this).val().length})
+            $('#total').html( "Total : "+t+" caractères"+((t < 2000) ? ' (Minimum 2000)' : ''))
+        }
+
+}

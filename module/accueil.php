@@ -58,7 +58,7 @@
         </div>
 
         <div class="col-sm-12" id="rp" style="display:none">
-            RP
+            Créer un personnage ? <a href="?page=new_char"> ICI !</a>
         </div>
         <div class="col-sm-12" id="univers" style="display:none">
             Univers
