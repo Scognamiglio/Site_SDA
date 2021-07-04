@@ -36,11 +36,30 @@ $(".info").click(function() {
 });
 $('#deleteChap').click(() => {deleteChapStory();});
 $('textarea').keyup(function (){nmbCaraArea($(this))})
+$('#save').click(() => {saveData()});
 //</Listener>//
 
 
 
+function saveData(){
+    var arrayAll = {}
+    $('#FormCreate').find('input,select,textarea').each(function(){if($(this).val() != ""){arrayAll[$(this).attr('name')] = $(this).val()}})
 
+    $.ajax({
+        url : 'index.php?page=new_char', // La ressource ciblée
+        type : 'POST', // Le type de la requête HTTP.
+        data : {
+            act: 'saveData',
+            data: arrayAll
+        }
+    }).done(function ($r) {
+        json = JSON.parse($r)
+        if(json[0]=="success"){
+            alert(json[1]);
+        }
+    });
+
+}
 
 function changeValue(cible){
 
@@ -84,9 +103,8 @@ function changeValue(cible){
         }
 
         val = t.val();
-        step = t.closest('*[class^="step-"]').attr('class')
         if(val!=""){
-            setCookie(step+":"+name,val,15);
+            setCookie("data:"+name,val+"[dateCookie]"+Math.round(+new Date() / 1000),15);
         }
     });
 }
