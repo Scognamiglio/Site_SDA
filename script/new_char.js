@@ -1,16 +1,14 @@
 var t
 
-debug = true;
+debug = false;
 
 var forceValue = {};
 
 
 //<Action>//
-if(!debug){
-    $('*[class^="step-"]:not(.step-1)').fadeOut(0);
-}
 
 addChapStory(false);
+CheckGoodStep();
 //</Action>//
 
 //<Listener>//
@@ -207,4 +205,30 @@ function nmbCaraArea($t){
             $('#total').html( "Total : "+t+" caractères"+((t < 2000) ? ' (Minimum 2000)' : ''))
         }
 
+}
+
+
+function CheckGoodStep(){
+    var step = "";
+
+    goodStep = ""
+    $($('#FormCreate').find('input,select,textarea').get().reverse()).each(function(){if($(this).val()!=""){step=$(this).closest('*[class^="step-"]').attr('class');return false}})
+    if(step != ""){
+        stepI = parseInt(step[step.length-1],10)
+        check = true;$('.'+step).find('input,select,textarea').each(function(){if($(this).val() == ""){check=false;return false}})
+        if(check){
+            stepI++;
+        }
+        for (i = 1;i<stepI+1;i++){
+            goodStep += ".step-"+i+","
+        }
+
+        goodStep = goodStep.substring(0, goodStep.length - 1);
+    }else{
+        goodStep = ".step-1"
+    }
+    console.log(goodStep)
+    if(!debug){
+        $('*[class^="step-"]:not('+goodStep+')').fadeOut(0);
+    }
 }
