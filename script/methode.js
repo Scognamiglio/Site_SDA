@@ -1,12 +1,18 @@
+$( ".popin" ).dialog({
+    autoOpen: false,
+    modal: true,
+    width: 630,
+    height: "auto",
+    open: function(event, ui) {
+        // Reset Dialog Position
+        $(this).dialog('widget').position({ my: "top", at: "top+50", of: window });
+    },
+});
+
+
 function openPopin($name) {
     console.log("#"+$name);
-    $( "#"+$name).dialog({
-        width: 630,
-        position: { my: 'top', at: 'top+50' },
-        modal: true,
-        resizable: false,
-        closeOnEscape: false
-    });
+    $( "#"+$name).dialog('open');
 }
 
 

@@ -42,13 +42,7 @@ $( "#FormCreate" ).submit(function( event ) {
         retourText += "<br><br> Tes modifications ayant était enregistrer plus tard, tu peux reprendre plus tard ou demander de l'aide à un MJ"
     }
     $('#popinInfoChange').html(retourText);
-    $( "#popin_info" ).dialog({
-        width: 630,
-        position: { my: 'top', at: 'top+50' },
-        modal: true,
-        resizable: false,
-        closeOnEscape: false
-    });
+    $( "#popin_info" ).dialog('open')
 });
 
 $(window).on("beforeunload", function() {
@@ -73,13 +67,7 @@ $(".info").click(function() {
     }).done(function ($r) {
         json = JSON.parse($r)
         $('#popinInfoChange').html(htmlDecode(json[0]));
-        $( "#popin_info" ).dialog({
-            width: 630,
-            position: { my: 'top', at: 'top+50' },
-            modal: true,
-            resizable: false,
-            closeOnEscape: false
-        });
+        $( "#popin_info" ).dialog('open');
     });
 });
 
