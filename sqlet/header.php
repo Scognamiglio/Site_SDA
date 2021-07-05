@@ -1,3 +1,4 @@
+
 <?php if(!empty($_SESSION['name'])):?>
     <div class="widgetLog">
         <div id="actif-login">
@@ -11,7 +12,7 @@
 
 
 <?php else:?>
-    <div style="float: right;margin-right: 1em;">
+    <div class="widgetNotLog">
         <span>
             <a class="login">Connexion</a>
         </span>
