@@ -40,3 +40,11 @@ div[role="dialog"]{
 h3{
     font-family: 'Cinzel Decorative', cursive;
 }
+
+@media (max-width: 640px) {
+    .ui-widget-overlay {
+        background: #aaaaaa;
+        opacity: 1;
+        filter: Alpha(Opacity=30);
+    }
+}
