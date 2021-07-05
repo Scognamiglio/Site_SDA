@@ -87,12 +87,17 @@ if(!empty($_SESSION['idPerso'])) {
                 retour(['success', $myRetour]);
                 break;
             case "saveData":
+                $now = date("Y-m-d H:i:s");
                 foreach ($_POST['data'] as $label => $val){
-                    $sql = "insert into ficheData values ('{$_SESSION['idPerso']}','$label','$val',now())  ON DUPLICATE KEY UPDATE VALUE='$val',dateInsert=NOW()";
+                    $sql = "insert into ficheData values ('{$_SESSION['idPerso']}','$label','$val','$now')  ON DUPLICATE KEY UPDATE VALUE='$val',dateInsert='$now'";
                     $bdd->query($sql);
                 }
                 retour(['success', "Enregistrement fait"]);
                 break;
+            case "valid":
+                $sql = "update site set state=1 where state=0 and idPerso='{$_SESSION['idPerso']}'";
+                $bdd->query($sql);
+
         }
 
     }else{

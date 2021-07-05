@@ -28,15 +28,32 @@ $( "#FormCreate" ).submit(function( event ) {
     event.preventDefault();
     retour = checkGo();
     if(retour.length == 0){
-        retourText = "Bien joué à toi ! Un administrateur reviendra vers toi d'ici quelque heures pour te valider ta fiche !"
+        retourText = "Bien joué à toi ! Un administrateur reviendra vers toi d'ici peu pour te valider ta fiche !"
+        $.ajax({
+            url : 'index.php?page=new_char', // La ressource ciblée
+            type : 'POST', // Le type de la requête HTTP.
+            data : {
+                act: 'valid',
+            }
+        })
     }else{
         retourText = "Certain élément sont à corrigé :<br>- "
         retourText += retour.join('<br>- ')
         retourText += "<br><br> Tes modifications ayant était enregistrer plus tard, tu peux reprendre plus tard ou demander de l'aide à un MJ"
     }
     $('#popinInfoChange').html(retourText);
-    $( "#popin_info" ).dialog();
+    $( "#popin_info" ).dialog({
+        width: 630,
+        position: { my: 'top', at: 'top+50' },
+        modal: true,
+        resizable: false,
+        closeOnEscape: false
+    });
 });
+
+$(window).on("beforeunload", function() {
+    saveData(false)
+})
 
 
 //</Listener>//
@@ -56,7 +73,13 @@ $(".info").click(function() {
     }).done(function ($r) {
         json = JSON.parse($r)
         $('#popinInfoChange').html(htmlDecode(json[0]));
-        $( "#popin_info" ).dialog();
+        $( "#popin_info" ).dialog({
+            width: 630,
+            position: { my: 'top', at: 'top+50' },
+            modal: true,
+            resizable: false,
+            closeOnEscape: false
+        });
     });
 });
 
@@ -144,7 +167,12 @@ function checkActiveStep($t){
         });
         if(test){
             $('.'+$nextStep).fadeIn(0);
+            stepI = (parseInt($step[$step.length-1],10)+1);
+            $('#showStep > td:nth-child('+stepI+')').addClass('now')
+            $('#showStep > td:nth-child('+stepI+')').prevAll().addClass('good')
         }
+    }else{
+        $('#showStep > td').addClass('good')
     }
 }
 
@@ -252,10 +280,18 @@ function CheckGoodStep(){
 
         goodStep = goodStep.substring(0, goodStep.length - 1);
     }else{
+        stepI = 1
         goodStep = ".step-1"
     }
     if(!debug){
         $('*[class^="step-"]:not('+goodStep+')').fadeOut(0);
+    }
+
+    if(stepI == 10){
+        $('#showStep > td').addClass('good')
+    }else{
+        $('#showStep > td:nth-child('+stepI+')').addClass('now')
+        $('#showStep > td:nth-child('+stepI+')').prevAll().addClass('good')
     }
 }
 

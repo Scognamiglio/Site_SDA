@@ -1,6 +1,12 @@
 function openPopin($name) {
     console.log("#"+$name);
-    $( "#"+$name).dialog();
+    $( "#"+$name).dialog({
+        width: 630,
+        position: { my: 'top', at: 'top+50' },
+        modal: true,
+        resizable: false,
+        closeOnEscape: false
+    });
 }
 
 

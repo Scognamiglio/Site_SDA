@@ -5,12 +5,26 @@ if(!empty($_SESSION['idPerso'])){
 
     // Rajouter une vérif si le personnage existe déjà
     ?>
+        <br>
+        <table style="border-spacing: 0.1em;border-collapse: separate;">
+            <tr id="showStep">
+                <td style="width: 5%"></td>
+                <td style="width: 5%"></td>
+                <td style="width: 5%"></td>
+                <td style="width: 15%"></td>
+                <td style="width: 30%"></td>
+                <td style="width: 10%"></td>
+                <td style="width: 10%"></td>
+                <td style="width: 10%"></td>
+                <td style="width: 10%"></td>
+            </tr>
+        </table>
         <form action="" method="post" id="FormCreate">
             <br>
             <p> Même si la données devrais être enregistrer dynamiquement (à l'aide vos cookies), <br>Vous pouvez appuyer sur ce bouton pour enregistrer directement sur le serveur pour pouvoir changer d'appareil</p>
             <button type="button" id="save">Save</button>
             <h3 class="spoiler" name="show-gene">générale</h3>
-            <table id="show-gene">
+            <table id="show-gene" class="TForData">
 
 
                 <tr class="step-1">
@@ -22,11 +36,11 @@ if(!empty($_SESSION['idPerso'])){
                     <td></td>
                 </tr>
                 <tr class="step-1">
-                    <td><label>Ton genre</label></td><td><?=SelectFor('genre')?></td>
+                    <td><label>Ton image</label></td><td><input required name="image" placeholder="https://i.pinimg.com/564x/b2/19/85/b21985a69dd8915046284383325458be.jpg" <?=(isset($dataUseDefault['image'])) ? "value='{$dataUseDefault['image']}'" : ""?> ></td>
                     <td></td>
                 </tr>
                 <tr class="step-1">
-                    <td><label>Ton image</label></td><td><input required name="image" placeholder="https://i.pinimg.com/564x/b2/19/85/b21985a69dd8915046284383325458be.jpg" <?=(isset($dataUseDefault['image'])) ? "value='{$dataUseDefault['image']}'" : ""?> ></td>
+                    <td><label>Ton genre</label></td><td><?=SelectFor('genre')?></td>
                     <td></td>
                 </tr>
 

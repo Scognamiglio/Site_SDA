@@ -52,11 +52,23 @@ $('.spoiler').click(function () {
 
 
 $(".register").click(function() {
-    $( "#dialog" ).dialog();
+    $( "#dialog" ).dialog({
+        width: 630,
+        position: { my: 'top', at: 'top+50' },
+        modal: true,
+        resizable: false,
+        closeOnEscape: false
+    });
 });
 
 $(".login").click(function() {
-    $( "#popin_login" ).dialog();
+    $( "#popin_login" ).dialog({
+        width: 630,
+        position: { my: 'top', at: 'top+50' },
+        modal: true,
+        resizable: false,
+        closeOnEscape: false
+    });
 });
 
 

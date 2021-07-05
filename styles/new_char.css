@@ -13,13 +13,13 @@ table{
     width: 25em;
 }
 
-tr > td:nth-child(1){
+.TForData > tr > td:nth-child(1){
     width: 7em;
 }
-tr > td:nth-child(2){
+.TForData > tr > td:nth-child(2){
     width: 14em;
 }
-tr > td:nth-child(3){
+.TForData > tr > td:nth-child(3){
     width: 4em;
 }
 
@@ -82,6 +82,24 @@ div[role="dialog"][aria-describedby="popin_info"]{
 input[name^="title-story-"]{
     width: 40%!important;
 }
+
+#showStep {
+    width: 10em ;
+}
+#showStep > td {
+    height: 1em;
+    border : 1px black solid;
+}
+
+.now {
+    background-color: blue;
+}
+
+.good {
+    background-color: green;
+}
+
+
 
 
 
