@@ -1,14 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Cinzel+Decorative:700&display=swap%27');
 
 .cont-logo{
+    margin-left:10em;
     text-align:center;
     margin-top:1em;
 }
 .logo-header{
-    border:1px solid black;
-    font-size: 46px;
-    font-style: italic;
-    font-family: 'Cinzel Decorative', cursive;
 }
 .nav{
     text-align: center;
@@ -40,11 +37,34 @@ div[role="dialog"]{
 h3{
     font-family: 'Cinzel Decorative', cursive;
 }
+.widgetLog{
+    float: right;
+    border: 1px solid black;
+    padding: 0.4em 1em;
+    margin-right: 1px;
+    background-color: lightgrey;
+    border-radius: 1em;
+}
 
 @media (max-width: 640px) {
     .ui-widget-overlay {
         background: #aaaaaa;
         opacity: 1;
         filter: Alpha(Opacity=30);
+    }
+    .widgetLog{
+        float: left;
+    }
+    body{
+        width: 175%;
+    }
+
+    .cont-logo{
+        margin-left:0;
+        margin-top:1em;
+    }
+
+    .logo-header > img{
+        max-width: 100%;
     }
 }

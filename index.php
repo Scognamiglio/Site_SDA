@@ -26,7 +26,6 @@ if(in_array($page,scandir("action"))){
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     </head>
     <body>
-
         <?php
         include "sqlet/header.php";
         include "sqlet/modal.php";

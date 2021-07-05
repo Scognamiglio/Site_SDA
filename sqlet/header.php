@@ -1,5 +1,5 @@
 <?php if(!empty($_SESSION['name'])):?>
-    <div style="float: right;border: 1px solid black;padding: 0.4em 1em;margin-right: 1px;background-color: lightgrey;border-radius: 1em;">
+    <div class="widgetLog">
         <div id="actif-login">
             <div class="my"><?=$_SESSION['name']?></div>
 
@@ -22,8 +22,9 @@
 
 
     <?php endif;?>
-<div class="cont-logo" style="margin-left:10em">
+<br>
+<div class="cont-logo">
     <span class="logo-header">
-        L'éveil du souverain des âmes
+        <img src="asset/image/logo.png">
     </span>
 </div>
