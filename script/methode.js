@@ -13,6 +13,7 @@ function decodeHtml(html) {
 
 
 function setCookie(name, value, days) {
+    value = value.replaceAll("\n","<br>");
     var d = new Date;
     d.setTime(d.getTime() + 24*60*60*1000*days);
     document.cookie = name + "=" + value + ";path=/SDA;expires=" + d.toGMTString();

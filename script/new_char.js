@@ -6,14 +6,41 @@ var forceValue = {};
 
 
 //<Action>//
+if($('#TheSpanForStory > input[name^="title-story-').length == 0){
+    addChapStory(false);
+}else{
+    t = 0;$('#TheSpanForStory').find('textarea').each(function(){t +=$(this).val().length})
+    $('#total').html( "Total : "+t+" caractères"+((t < 2000) ? ' (Minimum 2000)' : ''))
+}
 
-addChapStory(false);
 CheckGoodStep();
 //</Action>//
 
 //<Listener>//
 $('input,select,textarea').change(function (){changeValue($(this))});
 $('#newChap').click(() => {addChapStory();});
+$('#deleteChap').click(() => {deleteChapStory();});
+$('textarea').keyup(function (){nmbCaraArea($(this))})
+$('#save').click(() => {saveData()});
+
+$( "#FormCreate" ).submit(function( event ) {
+    saveData(false)
+    event.preventDefault();
+    retour = checkGo();
+    if(retour.length == 0){
+        retourText = "Bien joué à toi ! Un administrateur reviendra vers toi d'ici quelque heures pour te valider ta fiche !"
+    }else{
+        retourText = "Certain élément sont à corrigé :<br>- "
+        retourText += retour.join('<br>- ')
+        retourText += "<br><br> Tes modifications ayant était enregistrer plus tard, tu peux reprendre plus tard ou demander de l'aide à un MJ"
+    }
+    $('#popinInfoChange').html(retourText);
+    $( "#popin_info" ).dialog();
+});
+
+
+//</Listener>//
+
 $(".info").click(function() {
     id = $(this).attr('id');
     value = $('select[name="'+id+'"]').val()
@@ -32,16 +59,12 @@ $(".info").click(function() {
         $( "#popin_info" ).dialog();
     });
 });
-$('#deleteChap').click(() => {deleteChapStory();});
-$('textarea').keyup(function (){nmbCaraArea($(this))})
-$('#save').click(() => {saveData()});
-//</Listener>//
 
 
-
-function saveData(){
+function saveData(alerte = true){
     var arrayAll = {}
     $('#FormCreate').find('input,select,textarea').each(function(){if($(this).val() != ""){arrayAll[$(this).attr('name')] = $(this).val()}})
+
 
     $.ajax({
         url : 'index.php?page=new_char', // La ressource ciblée
@@ -52,7 +75,7 @@ function saveData(){
         }
     }).done(function ($r) {
         json = JSON.parse($r)
-        if(json[0]=="success"){
+        if(json[0]=="success" && alerte){
             alert(json[1]);
         }
     });
@@ -134,6 +157,7 @@ function addChapStory(listerner = true){
     if(i<10){
         $('#TheSpanForStory').find('div[id^="show-story-"]').css("display","none")
         html = $('#tpl_story').html().replaceAll("story-x","story-"+i);
+
         $('#TheSpanForStory').append(html)
 
         if(listerner){
@@ -154,6 +178,9 @@ function deleteChapStory(){
     if(i>1){
         $('input[name="title-story-'+(i-1)+'"]').nextAll().remove()
         $('input[name="title-story-'+(i-1)+'"]').remove();
+
+        setCookie("data:title-story-"+(i-1),"",-1)
+        setCookie("data:text-story-"+(i-1),"",-1)
 
         // Ajouté un check
         $('#newChap').html("Nouveau chapitre").removeClass('errorButton');
@@ -227,8 +254,46 @@ function CheckGoodStep(){
     }else{
         goodStep = ".step-1"
     }
-    console.log(goodStep)
     if(!debug){
         $('*[class^="step-"]:not('+goodStep+')').fadeOut(0);
     }
+}
+
+function checkGo(){
+    var arrayAll = {}
+    error = [];
+    $('#FormCreate').find('input,select,textarea').each(function(){if($(this).val() != ""){arrayAll[$(this).attr('name')] = $(this).val()}})
+    console.log(arrayAll);
+
+
+    t = 0;$('#TheSpanForStory').find('textarea').each(function(){t +=$(this).val().length})
+    if(t < 2000){
+        error.push('Il manque encore '+(2000-t)+' lettres pour ton histoire')
+    }
+
+
+    checkTextArea = {
+        caractere : 500,
+        objectif : 500,
+        donDescription : 30,
+        donEveil : 30,
+        donTranscendance : 30
+    }
+
+    for (var key in checkTextArea) {
+        t = $('textarea[name="'+key+'"]').val().length
+        if(t < checkTextArea[key]){
+            error.push('Il manque encore '+(checkTextArea[key]-t)+' lettres pour ton '+key)
+        }
+    }
+
+    requiered = ['name','age','genre','image','classe','vPhysique','vMagique','race','donName']
+    for(i=0;i<requiered.length;i++){
+        if(!arrayAll.hasOwnProperty(requiered[i]) || arrayAll[requiered[i]] == ""){
+            error.push("Le champ '"+requiered[i]+"' ne dois pas être vide.")
+        }
+    }
+    return error;
+
+
 }

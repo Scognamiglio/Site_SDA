@@ -15,6 +15,30 @@ if(!empty($_SESSION['idPerso'])) {
         ]
     ];
 
+
+    $fTextArea = function ($t){return str_replace("<br>","\n",$t);};
+
+    function selectRace($array)
+    {
+        global $raceByVoie;
+        $ret = $raceByVoie['all'];
+
+        foreach ($array as $v) {
+            $v = strtolower($v);
+            if (!empty($raceByVoie[$v])) {
+                foreach ($raceByVoie[$v] as $race) {
+                    $race = strtolower($race);
+                    if (!in_array($race, $ret)) {
+                        $ret[] = $race;
+                    }
+                }
+            }
+        }
+        return $ret;
+    }
+
+
+
     $sql = "select label,value from botExtra where label in ('vPhysique','vMagique','race')";
     foreach ($bdd->query($sql)->fetchAll() as $json) {
         $selectAndOption[$json['label']] = json_decode($json['value'], true);
@@ -22,6 +46,18 @@ if(!empty($_SESSION['idPerso'])) {
 
     $sql = "select label,value from botExtra where label='raceByVoie'";
     $raceByVoie = json_decode($bdd->query($sql)->fetch()['value'], true);
+
+    // Fonction anonyme pour gérer correctement l'insert de l'histoire
+
+    $insertData = function($l,$v){
+        global $dataUseDefault;
+        if (strpos($l,"story") == false){
+            $dataUseDefault[$l] = $v;
+        }else{
+            $i = explode("-",$l);
+            $dataUseDefault['story'][$i[2]][$i[0]] = $v;
+        }
+    };
 
     if (isset($_POST['act'])) {
         switch ($_POST['act']) {
@@ -46,8 +82,8 @@ if(!empty($_SESSION['idPerso'])) {
                         retour(['erreur', 'Le premier mot de votre prénom est déjà utilisé.']);
                     }
                 }
-                $myRetour = $_POST['value'];
-                $myRetour = empty($_POST['otherVoie']) ? $myRetour : selectRace([$myRetour, $_POST['otherVoie']]);
+                $myRetour = "vide";
+                $myRetour = empty($_POST['otherVoie']) ? $_POST['value'] : selectRace([$_POST['value'], $_POST['otherVoie']]);
                 retour(['success', $myRetour]);
                 break;
             case "saveData":
@@ -73,7 +109,7 @@ if(!empty($_SESSION['idPerso'])) {
                     setcookie($label, $res[0] . "[dateCookie]$dateInsert", time() + 3600 * 24 * 15);
                     $data[0] = $res[0];
                 }
-                $dataUseDefault[$ls[1]] = $data[0];
+                $insertData($ls[1],$data[0]);
             }
         }
 
@@ -81,27 +117,10 @@ if(!empty($_SESSION['idPerso'])) {
         $qry = "select label,value from ficheData where idPerso ='{$_SESSION['idPerso']}' and label not in ('" . implode("','", array_keys($dataUseDefault)) . "')";
         foreach ($bdd->query($qry)->fetchAll() as $bddCookie) {
             setcookie("data:" . $bddCookie['label'], $bddCookie['value'] . "[dateCookie]$dateInsert", time() + 3600 * 24 * 15);
-            $dataUseDefault[$bddCookie['label']] = $bddCookie['value'];
+            $insertData($bddCookie['label'],$bddCookie['value']);
         }
-    }
 
-    function selectRace($array)
-    {
-        global $raceByVoie;
-        $ret = $raceByVoie['all'];
-
-        foreach ($array as $v) {
-            $v = strtolower($v);
-            if (!empty($raceByVoie[$v])) {
-                foreach ($raceByVoie[$v] as $race) {
-                    $race = strtolower($race);
-                    if (!in_array($race, $ret)) {
-                        $ret[] = $race;
-                    }
-                }
-            }
-        }
-        return $ret;
+        //var_dump($dataUseDefault);
     }
 
 
@@ -126,7 +145,7 @@ if(!empty($_SESSION['idPerso'])) {
         $ret = "<select class='TheSelect' name='$name'><option value='' style='display: none'>Choisis</option>";
         foreach ($array as $option => $title) {
             $ckeck = isset($dataUseDefault[$name]) && $option == $dataUseDefault[$name] ? 'selected' : '';
-            $ret .= "<option value='$option' title='" . $rep($title) . "' $ckeck>$option</option>";
+            $ret .= "<option required value='$option' title='" . $rep($title) . "' $ckeck>$option</option>";
         }
         $ret .= "</select>";
 
