@@ -20,11 +20,17 @@ if(!$account){
     retour(['erreur',"Aucune correspondance entre le mot de passe et l'identifiant"]);
 }
 
-$qry = "delete from login where ip='{$_SERVER['REMOTE_ADDR']}'";
-$bdd->query($qry);
-$u = uniqid();
-$qry = "insert into login values('$u','{$_SERVER['REMOTE_ADDR']}','{$account['idPerso']}')";
-$bdd->query($qry);
+$qry = "select idLogin from login where ip='{$_SERVER['REMOTE_ADDR']}' and idPerso='{$account['idPerso']}'";
+$exist = $bdd->query($qry)->fetch();
+if(!$exist){
+    $qry = "delete from login where ip='{$_SERVER['REMOTE_ADDR']}'";
+    $bdd->query($qry);
+    $u = uniqid();
+    $qry = "insert into login values('$u','{$_SERVER['REMOTE_ADDR']}','{$account['idPerso']}')";
+    $bdd->query($qry);
+}else{
+    $u = $exist['idLogin'];
+}
 
 
 retour(['success',$u]);

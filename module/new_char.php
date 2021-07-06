@@ -183,7 +183,7 @@ if(!empty($_SESSION['idPerso'])){
     <?php
 
 }else{?>
-    <p>il est nécéssaire de créer un compte pour créer un personnage, c'est très rapide à faire !</p>Si tu as déjà un compte, ferme la fênetre d'inscription et clique sur "Connexion"
+    <p>Il est nécéssaire d'avoir un compte pour créer un personnage, c'est très rapide à faire !</p>Si tu as déjà un compte, ferme la fênetre d'inscription et clique sur "Connexion"
     <script>
         openPopin('dialog')
     </script>
