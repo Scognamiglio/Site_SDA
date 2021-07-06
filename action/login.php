@@ -27,7 +27,6 @@ if(!$exist){
     $bdd->query($qry);
     $u = uniqid();
     $qry = "insert into login values('$u','{$_SERVER['REMOTE_ADDR']}','{$account['idPerso']}',now())";
-    var_dump($qry);
     $bdd->query($qry);
 }else{
     $u = $exist['idLogin'];
