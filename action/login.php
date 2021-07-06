@@ -23,14 +23,14 @@ if(!$account){
 $qry = "select idLogin from login where ip='{$_SERVER['REMOTE_ADDR']}' and idPerso='{$account['idPerso']}'";
 $exist = $bdd->query($qry)->fetch();
 if(!$exist){
-    $qry = "delete from login where ip='{$_SERVER['REMOTE_ADDR']}'";
+    $qry = "delete from login where ip='{$_SERVER['REMOTE_ADDR']}' and idPerso='{$account['idPerso']}";
     $bdd->query($qry);
     $u = uniqid();
-    $qry = "insert into login values('$u','{$_SERVER['REMOTE_ADDR']}','{$account['idPerso']}')";
+    $qry = "insert into login values('$u','{$_SERVER['REMOTE_ADDR']}','{$account['idPerso']}',now())";
+    var_dump($qry);
     $bdd->query($qry);
 }else{
     $u = $exist['idLogin'];
 }
-
 
 retour(['success',$u]);
