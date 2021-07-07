@@ -28,7 +28,7 @@ $( "#FormCreate" ).submit(function( event ) {
     event.preventDefault();
     retour = checkGo();
     if(retour.length == 0){
-        retourText = "Bien joué à toi ! Un administrateur reviendra vers toi d'ici peu pour te valider ta fiche !"
+        retourText = "Bien joué à toi ! Un administrateur reviendra vers toi d'ici peu pour valider ta fiche !"
         $.ajax({
             url : 'index.php?page=new_char', // La ressource ciblée
             type : 'POST', // Le type de la requête HTTP.
@@ -135,7 +135,11 @@ function changeValue(cible){
         }
 
         val = t.val();
-        if(val!=""){
+        regex = new RegExp('(don|caractere|objectif|text-story)');
+        CheckCookie = regex.test(name);
+        console.log("CheckCookie");
+
+        if(val!="" && !CheckCookie){
             setCookie("data:"+name,val+"[dateCookie]"+Math.round(+new Date() / 1000),15);
         }
     });
@@ -194,9 +198,6 @@ function deleteChapStory(){
     if(i>1){
         $('input[name="title-story-'+(i-1)+'"]').nextAll().remove()
         $('input[name="title-story-'+(i-1)+'"]').remove();
-
-        setCookie("data:title-story-"+(i-1),"",-1)
-        setCookie("data:text-story-"+(i-1),"",-1)
 
         // Ajouté un check
         $('#newChap').html("Nouveau chapitre").removeClass('errorButton');

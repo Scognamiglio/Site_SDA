@@ -37,6 +37,10 @@ if(!empty($_SESSION['idPerso'])) {
         return $ret;
     }
 
+    function checkForCookie($label){
+        return !preg_match("/(don|caractere|objectif|text-story)/",$label);
+    }
+
 
 
     $sql = "select label,value from botExtra where label in ('vPhysique','vMagique','race')";
@@ -67,7 +71,6 @@ if(!empty($_SESSION['idPerso'])) {
 
             case "deleteChap":
                 $sql = "delete from ficheData where idPerso ='{$_SESSION['idPerso']}' and label like '%story-{$_POST['id']}'";
-                var_dump($sql);
                 $bdd->query($sql);
                 retour(['success']);
                 break;
@@ -83,6 +86,11 @@ if(!empty($_SESSION['idPerso'])) {
                     }
                 }
                 $myRetour = "vide";
+                if(!checkForCookie($label)){
+                    $now = date("Y-m-d H:i:s");
+                    $sql = "insert into ficheData values ('{$_SESSION['idPerso']}','$label','$val','$now')  ON DUPLICATE KEY UPDATE VALUE='$val',dateInsert='$now'";
+                    $bdd->query($sql);
+                }
                 $myRetour = empty($_POST['otherVoie']) ? $_POST['value'] : selectRace([$_POST['value'], $_POST['otherVoie']]);
                 retour(['success', $myRetour]);
                 break;
@@ -111,7 +119,9 @@ if(!empty($_SESSION['idPerso'])) {
                 $data[1] = date("Y-m-d H:i:s", $data[1]);
                 $res = $bdd->query("select value from ficheData where idPerso ='{$_SESSION['idPerso']}' and label='{$ls[1]}' and dateInsert > '{$data[1]}'")->fetch();
                 if (!empty($res)) {
-                    setcookie($label, $res[0] . "[dateCookie]$dateInsert", time() + 3600 * 24 * 15);
+                    if(checkForCookie($label)){
+                        setcookie($label, $res[0] . "[dateCookie]$dateInsert", time() + 3600 * 24 * 15);
+                    }
                     $data[0] = $res[0];
                 }
                 $insertData($ls[1],$data[0]);
@@ -121,7 +131,9 @@ if(!empty($_SESSION['idPerso'])) {
 
         $qry = "select label,value from ficheData where idPerso ='{$_SESSION['idPerso']}' and label not in ('" . implode("','", array_keys($dataUseDefault)) . "')";
         foreach ($bdd->query($qry)->fetchAll() as $bddCookie) {
-            setcookie("data:" . $bddCookie['label'], $bddCookie['value'] . "[dateCookie]$dateInsert", time() + 3600 * 24 * 15);
+            if(checkForCookie($bddCookie['label'])){
+                setcookie("data:" . $bddCookie['label'], $bddCookie['value'] . "[dateCookie]$dateInsert", time() + 3600 * 24 * 15);
+            }
             $insertData($bddCookie['label'],$bddCookie['value']);
         }
 

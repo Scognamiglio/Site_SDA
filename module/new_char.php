@@ -21,9 +21,9 @@ if(!empty($_SESSION['idPerso'])){
         </table>
         <form action="" method="post" id="FormCreate">
             <br>
-            <p> Même si la données devrais être enregistrer dynamiquement (à l'aide vos cookies), <br>Vous pouvez appuyer sur ce bouton pour enregistrer directement sur le serveur pour pouvoir changer d'appareil</p>
+            <p> Même si les données devraient être enregistrées dynamiquement (à l'aide de vos cookies), <br>Vous pouvez appuyer sur "Save" pour enregistrer directement et changer d'appareil si besoin.</p>
             <button type="button" id="save">Save</button>
-            <h3 class="spoiler" name="show-gene">générale</h3>
+            <h3 class="spoiler" name="show-gene">général</h3>
             <table id="show-gene" class="TForData">
 
 
@@ -69,7 +69,7 @@ if(!empty($_SESSION['idPerso'])){
                 </br>
                 <h3 class="spoiler" name="show-perso">Personnalité</h3>
                 <span id="show-perso">
-                    <label>Décrit nous rapidement ta personnalité (Limité à 2000 caractères)</label>
+                    <label>Décris nous rapidement ta personnalité (Limité à 2000 caractères)</label>
                     <br>
                     <textarea required name="caractere" maxlength="2000" minlength="500" id="cara_t" ><?=(isset($dataUseDefault['caractere'])) ? $fTextArea($dataUseDefault['caractere']) : ""?></textarea>
                     <br><span id="cara_c" class="not"></span>
@@ -86,7 +86,7 @@ if(!empty($_SESSION['idPerso'])){
                 <br>
                 <h3 class="spoiler" name="show-cat-story">Histoire</h3>
                 <div id="show-cat-story">
-                    <p>Il faudra séparé ton histoire en chapitre de maximum 2000 caractères (Il est possible de n'avoir qu'un seul chapitre)</p>
+                    <p>Il faudra séparer ton histoire en chapitres de maximum 2000 caractères. (Il est possible de n'avoir qu'un seul chapitre.)</p>
                     <button id="newChap" type="button">Nouveau chapitre</button>
                     <br>
                     <br>
@@ -112,8 +112,8 @@ if(!empty($_SESSION['idPerso'])){
             <span class="step-6">
                 <h3>Ton don</h3>
                 <p>
-                    Le don est le pouvoir inérant à chaque personne dans ce monde. <br>Il permet à son utilisateur d'avoir des capacités que les autres ne possèdes pas.
-                    <br><br>P.S:Si tu clique sur un titre(ex:Description) Tu peux en cacher le contenu
+                    Le don est le pouvoir inhérent à chaque personne dans ce monde. <br>Il permet à son utilisateur d'avoir des capacités que les autres ne possèdent pas.
+                    <br><br>P.S:Si tu cliques sur un titre (ex: Description) Tu peux en cacher le contenu
                     <br>Plus d'information : ##LINK##
                 </p>
 
@@ -124,7 +124,7 @@ if(!empty($_SESSION['idPerso'])){
                 <div id="show-donDescription">
                     <label>Une petite description de son fonctionnement ?</label>
                     <br>
-                    <textarea required name="donDescription" maxlength="2000" minlength="30" id="dond_t" placeholder="Ce don donne à son utilisateur la capacité de percevoir les âmes et de s'en nourrir si la personne la possédant est morte.&#10;ça permet à son utilisateur de récupérer de l'énergie"><?=(isset($dataUseDefault['donDescription'])) ? $fTextArea($dataUseDefault['donDescription']) : ""?></textarea>
+                    <textarea required name="donDescription" maxlength="2000" minlength="30" id="dond_t" placeholder="Ce don donne à son utilisateur la capacité de percevoir les âmes et de s'en nourrir si la personne la possédant est morte.&#10;Cela permet à son utilisateur de récupérer de l'énergie"><?=(isset($dataUseDefault['donDescription'])) ? $fTextArea($dataUseDefault['donDescription']) : ""?></textarea>
                     <br><span id="dond_c" class="not"></span>
                 </div>
 
@@ -146,7 +146,7 @@ if(!empty($_SESSION['idPerso'])){
                 <div id="show-donTranscendance">
                     <label>Après l'éveil, il existe un stade encore plus puissant nommé la transcendance<br>Ce n'est pas un simple gain de puissance (mais ça peut l'être si aucune idée)</label>
                     <br>
-                    <textarea required name="donTranscendance" maxlength="2000" minlength="30" id="dont_t" placeholder="Maintenant l'âme et le corps de l'utilisateur ne font plus qu'un, lui permettant de légèrement plané, de passer au travers la matière non magique voir même de puissé dans la puissance de son âme pour gagner une force terrifiante."><?=(isset($dataUseDefault['donTranscendance'])) ? $fTextArea($dataUseDefault['donTranscendance']) : ""?></textarea>
+                    <textarea required name="donTranscendance" maxlength="2000" minlength="30" id="dont_t" placeholder="Maintenant l'âme et le corps de l'utilisateur ne font plus qu'un, lui permettant de légèrement planer, de passer à travers la matière non magique voire même de puisé dans la puissance de son âme pour gagner une force terrifiante."><?=(isset($dataUseDefault['donTranscendance'])) ? $fTextArea($dataUseDefault['donTranscendance']) : ""?></textarea>
                     <br><span id="dont_c" class="not"></span>
                 </div>
             </span>
@@ -157,7 +157,7 @@ if(!empty($_SESSION['idPerso'])){
                 <div id="show-donComp">
                     <label>Des informations complémentaires ? Des limitations ? Vous pouvez les mettres ici !</label>
                     <br>
-                    <textarea name="donComp" maxlength="2000" minlength="0" id="donc_t" placeholder="- Sous sa forme d'âme il est très sensible, surtout au feu et à la lumière&#10;- Quand il utilise ses capacités, ses yeux sont violets&#10;- Si il ne se nourrit pas assez souvent, il finit par s'affaiblir.&#10;- Une âme morte depuis trop de temps le rend malade."><?=(isset($dataUseDefault['donComp'])) ? $fTextArea($dataUseDefault['donComp']) : ""?></textarea>
+                    <textarea name="donComp" maxlength="2000" minlength="0" id="donc_t" placeholder="- Sous sa forme d'âme il est très sensible, surtout au feu et à la lumière.&#10;- Quand il utilise ses capacités, ses yeux sont violets.&#10;- S'il ne se nourrit pas assez souvent, il finit par s'affaiblir.&#10;- Une âme morte depuis trop de temps le rend malade."><?=(isset($dataUseDefault['donComp'])) ? $fTextArea($dataUseDefault['donComp']) : ""?></textarea>
                     <br><span id="donc_c" class="not"></span>
                 </div>
                 <br>
