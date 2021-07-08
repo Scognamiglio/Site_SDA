@@ -75,7 +75,7 @@ if(!empty($_SESSION['idPerso'])) {
                 retour(['success']);
                 break;
             case "setData":
-                $val = $_POST['value'];
+                $val = str_replace("'","\'",$_POST['value']);
                 $label = $_POST['label'];
                 if (empty($val))
                     retour(['erreur', "la donnée est vide."]);
@@ -97,6 +97,7 @@ if(!empty($_SESSION['idPerso'])) {
             case "saveData":
                 $now = date("Y-m-d H:i:s");
                 foreach ($_POST['data'] as $label => $val){
+                    $val = str_replace("'","\'",$val);
                     $sql = "insert into ficheData values ('{$_SESSION['idPerso']}','$label','$val','$now')  ON DUPLICATE KEY UPDATE VALUE='$val',dateInsert='$now'";
                     $bdd->query($sql);
                 }

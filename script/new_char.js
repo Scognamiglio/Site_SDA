@@ -13,11 +13,11 @@ if($('#TheSpanForStory > input[name^="title-story-').length == 0){
     $('#total').html( "Total : "+t+" caractères"+((t < 2000) ? ' (Minimum 2000)' : ''))
 }
 
-CheckGoodStep();
+CheckGoodStep(true);
 //</Action>//
 
 //<Listener>//
-$('input,select,textarea').change(function (){changeValue($(this))});
+
 $('#newChap').click(() => {addChapStory();});
 $('#deleteChap').click(() => {deleteChapStory();});
 $('textarea').keyup(function (){nmbCaraArea($(this))})
@@ -47,6 +47,20 @@ $( "#FormCreate" ).submit(function( event ) {
 
 $(window).on("beforeunload", function() {
     saveData(false)
+})
+
+$('input,select,textarea').change(function (){
+    changeValue($(this))
+    if($(this).get(0).nodeName == "SELECT"){
+        checkActiveStep($(this));
+        CheckGoodStep()
+    }
+
+});
+
+$('input,textarea').keyup(function (){
+    checkActiveStep($(this));
+    CheckGoodStep()
 })
 
 
@@ -95,13 +109,13 @@ function saveData(alerte = true){
 
 function changeValue(cible){
 
+    var cible = cible
+
     tabV = {
         vPhysique : 'vMagique',
         vMagique : 'vPhysique'
     }
-    t = cible
-    console.log(t);
-    name = t.attr('name');
+    name = cible.attr('name');
 
     data = {
         act: 'setData',
@@ -119,22 +133,22 @@ function changeValue(cible){
         data : data
     }).done(function ($r) {
         json = JSON.parse($r)
-        name = t.attr('name');
+        test = cible
+        name = cible.attr('name');
+
 
         if(json[0] == "erreur" || forceValue.hasOwnProperty(name) && forceValue[name] == false){
-            t.addClass('error');
+            cible.addClass('error');
         }else{
-            t.removeClass('error');
+            cible.removeClass('error');
             if(typeof json[1]==="object"){
                 tab = Object.values(json[1]).map(x => htmlDecode(x))
                 $('select[name="race"] > option').each(function(i){if(tab.indexOf($(this).val().toLowerCase())!=-1){$(this).removeClass('not')}else{$(this).addClass('not')}})
                 $('select[name="race"]').val("");
             }
-
-            checkActiveStep(t);
         }
 
-        val = t.val();
+        val = cible.val();
         regex = new RegExp('(don|caractere|objectif|text-story)');
         CheckCookie = regex.test(name);
         console.log("CheckCookie");
@@ -159,18 +173,10 @@ function checkActiveStep($t){
         });
         if(test){
             $('.'+$nextStep).fadeIn(0);
-            stepI = (parseInt($step[$step.length-1],10)+1);
-            $('#showStep > td:nth-child('+stepI+')').addClass('now')
-            $('#showStep > td:nth-child('+stepI+')').prevAll().addClass('good')
+
         }
-    }else{
-        $('#showStep > td').addClass('good')
     }
 }
-
-
-
-
 
 function addChapStory(listerner = true){
     i = $('#TheSpanForStory > input[name^="title-story-').length
@@ -185,13 +191,15 @@ function addChapStory(listerner = true){
             $('textarea[name="text-story-'+i+'"]').change(function () {changeValue($(this))})
             $('input[name="title-story-'+i+'"]').change(function () {changeValue($(this))})
             $('textarea[name="text-story-'+i+'"]').keyup(function (){nmbCaraArea($(this))})
+
+            $('input[name="title-story-'+i+'"]').keyup(function (){checkActiveStep($(this));CheckGoodStep()})
+            $('textarea[name="text-story-'+i+'"]').keyup(function (){checkActiveStep($(this));CheckGoodStep()})
         }
 
     }else{
         $('#newChap').html("Limite de chapitre atteinte.").addClass('errorButton');
     }
 }
-
 
 function deleteChapStory(){
     i = $('#TheSpanForStory > input[name^="title-story-').length
@@ -215,8 +223,6 @@ function deleteChapStory(){
         })
     }
 }
-
-
 
 function nmbCaraArea($t){
         id = $t.attr('id');
@@ -251,36 +257,29 @@ function nmbCaraArea($t){
 
 }
 
-
-function CheckGoodStep(){
-    var step = "";
-
-    goodStep = ""
-    $($('#FormCreate').find('input,select,textarea').get().reverse()).each(function(){if($(this).val()!=""){step=$(this).closest('*[class^="step-"]').attr('class');return false}})
-    if(step != ""){
-        stepI = parseInt(step[step.length-1],10)
-        check = true;$('.'+step).find('input,select,textarea').each(function(){if($(this).val() == ""){check=false;return false}})
-        if(check){
-            stepI++;
+function CheckGoodStep(first = false){
+    tab = stateOfStep()
+    $('#showStep > td').removeClass()
+    f=1
+    for(i=1;i<=9;i++){
+        if(tab[i] != 0){
+            f=i
+            $('#showStep > td:nth-child('+i+')').addClass( tab[i]==1 ? "now" : "good")
         }
-        for (i = 1;i<stepI+1;i++){
+    }
+
+    if(first){
+        if(tab[f] == 2){
+            f++
+        }
+        goodStep = "";
+        for (i = 1;i<f+1;i++){
             goodStep += ".step-"+i+","
         }
-
         goodStep = goodStep.substring(0, goodStep.length - 1);
-    }else{
-        stepI = 1
-        goodStep = ".step-1"
-    }
-    if(!debug){
-        $('*[class^="step-"]:not('+goodStep+')').fadeOut(0);
-    }
-
-    if(stepI == 10){
-        $('#showStep > td').addClass('good')
-    }else{
-        $('#showStep > td:nth-child('+stepI+')').addClass('now')
-        $('#showStep > td:nth-child('+stepI+')').prevAll().addClass('good')
+        if(!debug){
+            $('*[class^="step-"]:not('+goodStep+')').fadeOut(0);
+        }
     }
 }
 
@@ -288,7 +287,6 @@ function checkGo(){
     var arrayAll = {}
     error = [];
     $('#FormCreate').find('input,select,textarea').each(function(){if($(this).val() != ""){arrayAll[$(this).attr('name')] = $(this).val()}})
-    console.log(arrayAll);
 
 
     t = 0;$('#TheSpanForStory').find('textarea').each(function(){t +=$(this).val().length})
@@ -321,4 +319,29 @@ function checkGo(){
     return error;
 
 
+}
+
+function stateOfStep(step = null){
+    var ret = {};
+
+    for (i=1;i<=9;i++){
+        var tab = [0,0];
+        $('.step-'+i).find('input,select').each(function () {if($(this).val() == ''){tab[0] = -1}else{tab[1] = 1}})
+        ret[i] = 1 + tab[0] + tab[1]
+    }
+
+    var aSize = {}
+    $('#FormCreate').find('textarea').each(function(){aSize[$(this).attr('name')] = $(this).val().length})
+    console.log(aSize)
+
+    ret[4] = (aSize['caractere'] == 0 && 0 == aSize['objectif']) ? 0 : (aSize['caractere'] < 500 || aSize['objectif'] < 500) ? 1 : 2
+    t = 0;$('#TheSpanForStory').find('textarea').each(function(){t +=$(this).val().length})
+    ret[5] = (t==0 && ret[5]==0) ? 0 : (t<2000 || ret[5]!=2) ? 1 : 2
+
+    ret[6] = (aSize['donDescription']==0 && ret[6]==0) ? 0 : (aSize['donDescription']<30 || ret[6]!=2) ? 1 : 2
+    ret[7] = (aSize['donEveil'] == 0) ? 0 : (aSize['donEveil'] < 30) ? 1 : 2
+    ret[8] = (aSize['donTranscendance'] == 0) ? 0 : (aSize['donTranscendance'] < 30) ? 1 : 2
+    ret[9] = (aSize['donComp'] == 0) ? 0 : 2
+
+    return (step==null) ? ret : ret[step];
 }
