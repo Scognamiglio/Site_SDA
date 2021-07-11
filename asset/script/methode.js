@@ -11,7 +11,6 @@ $( ".popin" ).dialog({
 
 
 function openPopin($name) {
-    console.log("#"+$name);
     $( "#"+$name).dialog('open');
 }
 

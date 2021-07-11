@@ -3,18 +3,9 @@ date_default_timezone_set( "Europe/Paris");
 
 header('Content-Type: text/html; charset=utf-8');
 include "../conf.php";
+include "asset/function.php";
 
-function retour($a){
-    $htmlRecur = function ($tab) use (&$htmlRecur){
-        foreach ($tab as $k => $v){
-            $tab[$k] = (is_array($v)) ? $htmlRecur($v) : htmlentities($v);
-        }
-        return $tab;
-    };
 
-    echo json_encode($htmlRecur($a), JSON_FORCE_OBJECT);
-    die();
-}
 
 
 if(!empty($_COOKIE['myToken'])){

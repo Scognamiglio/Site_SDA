@@ -17,5 +17,7 @@ if($bdd->query($sql)->fetch()){
 
 $password = uniqid();
 $bdd->query("insert into site values('$id',null,'".sha1($password)."',0)");
-$bdd->query("insert into exec(action,param) values('message','{\"cible\":\"$id\",\"message\":\"$password\"}')");
+$idChannel = postDiscord('users/@me/channels',['recipients' => [$id]])['id'];
+postDiscord("channels/$idChannel/messages", ['content' => $password]);
+
 retour(['success','0']);

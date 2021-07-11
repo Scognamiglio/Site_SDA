@@ -98,3 +98,14 @@ $('#popin_login > #go').click(function () {
         }
     })
 })
+
+
+$('.buttonDeco').click( () => {
+    $('#popinInfoChange').html("<p>Désirez-vous vous déconnectez ?</p><br><button onclick='logout()'>Déconnexion</button>");
+    $( "#popin_info" ).dialog('open')
+})
+
+function logout(){
+    setCookie('myToken',"",'-1')
+    document.location.href=document.location.href;
+}

@@ -6,7 +6,7 @@
 
             <div style="display: none" class="actif-login"><a href="?page=account">Mon compte</a></div>
 
-            <div style="display: none" class="actif-login"><a class="register">Déconnexion</a></div>
+            <div style="display: none" class="actif-login"><a class="buttonDeco">Déconnexion</a></div>
         </div>
     </div>
 
