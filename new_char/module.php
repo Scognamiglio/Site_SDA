@@ -1,17 +1,15 @@
-dgs
-<link href="styles/new_char.css" rel="stylesheet" type="text/css">
 <br>
-<table style="border-spacing: 0.1em;border-collapse: separate;">
+<table class="BarProgress">
     <tr id="showStep">
-        <td style="width: 5%"></td>
-        <td style="width: 5%"></td>
-        <td style="width: 5%"></td>
-        <td style="width: 15%"></td>
-        <td style="width: 30%"></td>
-        <td style="width: 10%"></td>
-        <td style="width: 10%"></td>
-        <td style="width: 10%"></td>
-        <td style="width: 10%"></td>
+        <td style="width: 5%" title="Information Général"></td>
+        <td style="width: 5%" title="Information compétance"></td>
+        <td style="width: 5%" title="Race"></td>
+        <td style="width: 15%" title="Caractère"></td>
+        <td style="width: 30%" title="Histoire"></td>
+        <td style="width: 10%" title="don"></td>
+        <td style="width: 10%" title="éveil du don"></td>
+        <td style="width: 10%" title="Transcendance du don"></td>
+        <td style="width: 10%" title="Information complémentaire"></td>
     </tr>
 </table>
 <form action="" method="post" id="FormCreate">
@@ -19,7 +17,7 @@ dgs
     <p> Même si les données devraient être enregistrées dynamiquement (à l'aide de vos cookies), <br>Vous pouvez appuyer sur "Save" pour enregistrer directement et changer d'appareil si besoin.</p>
     <button type="button" id="save">Save</button>
     <h3 class="spoiler" name="show-gene">général</h3>
-    <table id="show-gene" class="TForData">
+    <table id="show-gene" class="TForData" style="display: none">
 
 
         <tr class="step-1">
@@ -45,12 +43,12 @@ dgs
             <td><a class="info" id="classe">info</a></td>
         </tr>
         <tr class="step-2">
-            <td><label>Voie physique</label></td><td><?=SelectFor('vPhysique')?></td>
-            <td><a class="info" id="vPhysique">info</a></td>
+            <td><label>Voie primaire</label></td><td><?=SelectFor('vPrimaire')?></td>
+            <td><a class="info" id="vPrimaire">info</a></td>
         </tr>
         <tr class="step-2">
-            <td><label>Voie magique</label></td><td><?=SelectFor('vMagique')?></td>
-            <td><a class="info" id="vMagique">info</a></td>
+            <td><label>Voie secondaire</label></td><td><?=SelectFor('vSecondaire')?></td>
+            <td><a class="info" id="vSecondaire">info</a></td>
         </tr>
 
 
@@ -63,7 +61,7 @@ dgs
     <span class="step-4">
         </br>
         <h3 class="spoiler" name="show-perso">Personnalité</h3>
-        <span id="show-perso">
+        <span id="show-perso" style="display: none">
             <label>Décris nous rapidement ta personnalité (Limité à 2000 caractères)</label>
             <br>
             <textarea required name="caractere" maxlength="2000" minlength="500" id="cara_t" ><?=(isset($dataUseDefault['caractere'])) ? $fTextArea($dataUseDefault['caractere']) : ""?></textarea>
@@ -80,7 +78,7 @@ dgs
     <span class="step-5">
         <br>
         <h3 class="spoiler" name="show-cat-story">Histoire</h3>
-        <div id="show-cat-story">
+        <div id="show-cat-story" style="display: none">
             <p>Il faudra séparer ton histoire en chapitres de maximum 2000 caractères. (Il est possible de n'avoir qu'un seul chapitre.)</p>
             <button id="newChap" type="button">Nouveau chapitre</button>
             <br>
@@ -170,5 +168,3 @@ dgs
     </div>
     <br>
 </span>
-
-<script type="text/javascript" src="script/new_char.js"></script>

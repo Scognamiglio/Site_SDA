@@ -7,6 +7,21 @@ body{
     padding-bottom: 2em;
 }
 
+.barProgress{
+    margin-left: 1em;
+    margin-right: 0em;
+    width: 5em;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 50px;
+}
+
+.bigBarProgress{
+    width: 20em;
+    height: 1.5em;
+    transition: width 500ms, height 1s
+}
+
 table{
     margin-left : auto;
     margin-right : auto;

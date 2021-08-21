@@ -47,10 +47,11 @@ function checkForCookie($label){
 
 
 
-$sql = "select label,value from botExtra where label in ('vPhysique','vMagique','race')";
+$sql = "select label,value from botExtra where label in ('vPrimaire','race')";
 foreach ($bdd->query($sql)->fetchAll() as $json) {
     $selectAndOption[$json['label']] = json_decode($json['value'], true);
 }
+$selectAndOption['vSecondaire'] = $selectAndOption['vPrimaire'];
 
 $sql = "select label,value from botExtra where label='raceByVoie'";
 $raceByVoie = json_decode($bdd->query($sql)->fetch()['value'], true);

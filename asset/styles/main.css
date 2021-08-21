@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Cinzel+Decorative:700&display=swap%27');
 
+
+body{
+    font-family: Courier New, monospace;
+}
+
+
 .cont-logo{
     margin-left:10em;
     text-align:center;

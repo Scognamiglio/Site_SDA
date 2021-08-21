@@ -1,6 +1,7 @@
 var t
 
 debug = false;
+var etatProgress = false
 
 var forceValue = {};
 
@@ -17,6 +18,32 @@ CheckGoodStep(true);
 //</Action>//
 
 //<Listener>//
+
+$('.barProgress').click(function (){
+    etatProgress = !etatProgress
+    resizeBarProgress()
+});
+
+$('.barProgress').hover(function (){
+    resizeBarProgress()
+});
+function resizeBarProgress(){
+    etat = $('.BarProgress:hover').length>0
+    sizeBig = $('.bigBarProgress').length>0
+
+
+    check = etatProgress ? true : etat
+
+    if(sizeBig != check){
+        if(check){
+            $('.BarProgress').addClass('bigBarProgress')
+        }else{
+            $('.BarProgress').removeClass('bigBarProgress')
+        }
+    }
+
+
+}
 
 $('#newChap').click(() => {addChapStory();});
 $('#deleteChap').click(() => {deleteChapStory();});
@@ -48,6 +75,8 @@ $( "#FormCreate" ).submit(function( event ) {
 $(window).on("beforeunload", function() {
     saveData(false)
 })
+
+$(document).ready(function() { $('h3:visible').last().trigger('click') });
 
 $('input,select,textarea').change(function (){
     changeValue($(this))
@@ -86,6 +115,7 @@ $(".info").click(function() {
 });
 
 
+
 function saveData(alerte = true){
     var arrayAll = {}
     $('#FormCreate').find('input,select,textarea').each(function(){if($(this).val() != ""){arrayAll[$(this).attr('name')] = $(this).val()}})
@@ -112,8 +142,8 @@ function changeValue(cible){
     var cible = cible
 
     tabV = {
-        vPhysique : 'vMagique',
-        vMagique : 'vPhysique'
+        vPrimaire : 'vSecondaire',
+        vSecondaire : 'vPrimaire'
     }
     name = cible.attr('name');
 
@@ -310,7 +340,7 @@ function checkGo(){
         }
     }
 
-    requiered = ['name','age','genre','image','classe','vPhysique','vMagique','race','donName']
+    requiered = ['name','age','genre','image','classe','vPrimaire','vSecondaire','race','donName']
     for(i=0;i<requiered.length;i++){
         if(!arrayAll.hasOwnProperty(requiered[i]) || arrayAll[requiered[i]] == ""){
             error.push("Le champ '"+requiered[i]+"' ne dois pas être vide.")
