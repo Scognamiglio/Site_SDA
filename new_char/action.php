@@ -10,12 +10,6 @@ $selectAndOption = [
         'Homme' => 'Homme',
         'Femme' => 'Femme',
         'Autre' => 'Autre'
-    ],
-    'classe' => [
-        'Voleur' => 'Spécialiste des attaques dans l\'ombre et dôté d\'une excelente agilité<br>Atk ++<br>ADR +',
-        'Guerrier' => 'Entrainé depuis toujours à être sur le front, ils sont aussi résistant que dangereux au corps à corps<br>PV ++<br>Atk +',
-        'Magicien' => 'Capable de contrôler les élements et la magie dans tous ses formes, il ne faut jamais perdre de vue un magicien.<br>Atk ++ <br>PM +',
-        'Prêtre' => 'Toujours là pour soigner et soutenir ce qui en ont besoin, il est la clef de la victoire de long combat<br>PM +<br>PV +<br> ADR+'
     ]
 ];
 

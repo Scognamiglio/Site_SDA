@@ -340,7 +340,7 @@ function checkGo(){
         }
     }
 
-    requiered = ['name','age','genre','image','classe','vPrimaire','vSecondaire','race','donName']
+    requiered = ['name','age','genre','image','vPrimaire','vSecondaire','race','donName']
     for(i=0;i<requiered.length;i++){
         if(!arrayAll.hasOwnProperty(requiered[i]) || arrayAll[requiered[i]] == ""){
             error.push("Le champ '"+requiered[i]+"' ne dois pas être vide.")

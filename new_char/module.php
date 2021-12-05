@@ -37,11 +37,6 @@
             <td></td>
         </tr>
 
-
-        <tr class="step-2">
-            <td><label>Classe</label></td><td><?=SelectFor('classe')?></td>
-            <td><a class="info" id="classe">info</a></td>
-        </tr>
         <tr class="step-2">
             <td><label>Voie primaire</label></td><td><?=SelectFor('vPrimaire')?></td>
             <td><a class="info" id="vPrimaire">info</a></td>
