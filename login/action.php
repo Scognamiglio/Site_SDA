@@ -14,6 +14,11 @@ if(count($ret)>0){
     retour(['erreur',implode('\n',$ret)]);
 }
 
+// Améliorer la lib mysql
+if(urlencode($login) != $login){
+    retour(['erreur',":3 pas cool, si tu as vraiment des problèmes de connexion et non de hack, contact Zheneos"]);
+}
+
 $qry = "SELECT s.idPerso,prenom FROM site s LEFT JOIN perso p ON s.idPerso=p.idPerso where (s.login='$login' or s.idPerso='$login') and s.password='".sha1($psw)."'";
 $account = $bdd->query($qry)->fetch();
 if(!$account){

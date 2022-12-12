@@ -11,7 +11,7 @@ if($('#TheSpanForStory > input[name^="title-story-').length == 0){
     addChapStory(false);
 }else{
     t = 0;$('#TheSpanForStory').find('textarea').each(function(){t +=$(this).val().length})
-    $('#total').html( "Total : "+t+" caractères"+((t < 2000) ? ' (Minimum 2000)' : ''))
+    $('#total').html( "Total : "+t+" caractères"+((t < 500) ? ' (Minimum 500)' : ''))
 }
 
 CheckGoodStep(true);
@@ -241,7 +241,7 @@ function deleteChapStory(){
         $('#newChap').html("Nouveau chapitre").removeClass('errorButton');
 
         t = 0;$('#TheSpanForStory').find('textarea').each(function(){t +=$(this).val().length})
-        $('#total').html( "Total : "+t+" caractères"+((t < 2000) ? ' (Minimum 2000)' : ''))
+        $('#total').html( "Total : "+t+" caractères"+((t < 500) ? ' (Minimum 500)' : ''))
 
         $.ajax({
             url : 'index.php?page=new_char', // La ressource ciblée
@@ -282,7 +282,7 @@ function nmbCaraArea($t){
 
         if(name.startsWith("text-story")){
             t = 0;$('#TheSpanForStory').find('textarea').each(function(){t +=$(this).val().length})
-            $('#total').html( "Total : "+t+" caractères"+((t < 2000) ? ' (Minimum 2000)' : ''))
+            $('#total').html( "Total : "+t+" caractères"+((t < 500) ? ' (Minimum 500)' : ''))
         }
 
 }
@@ -320,8 +320,8 @@ function checkGo(){
 
 
     t = 0;$('#TheSpanForStory').find('textarea').each(function(){t +=$(this).val().length})
-    if(t < 2000){
-        error.push('Il manque encore '+(2000-t)+' lettres pour ton histoire')
+    if(t < 500){
+        error.push('Il manque encore '+(500-t)+' lettres pour ton histoire')
     }
 
 

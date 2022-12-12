@@ -25,6 +25,14 @@
 
 </div>
 
+<div class="popin" id="popinApp" title="Inscription" style="display: none">
+    <div class="progApp"></div>
+    <p id="namePop"></p>
+    <input name="id" style="display: none"><br>
+    <div id="descr"></div>
+    <div id="help" style="display: none"></div>
+</div>
+
 <div class="popin" id="popin_info" title="Information" style="display: none">
 
     <p id="popinInfoChange">abc</p>

@@ -1,9 +1,13 @@
 <?php
 
+
+function countCharRecur($data,$label){
+    return strlen(implode(array_filter($data,function($k) use($label){return strpos($k,"$label") !== false;}, ARRAY_FILTER_USE_KEY)));
+}
 function retour($a){
     $htmlRecur = function ($tab) use (&$htmlRecur){
         foreach ($tab as $k => $v){
-            $tab[$k] = (is_array($v)) ? $htmlRecur($v) : htmlentities($v);
+            $tab[$k] = (is_array($v)) ? $htmlRecur($v) : htmlentities(str_replace('"','\\"',$v));
         }
         return $tab;
     };
@@ -34,4 +38,8 @@ function postDiscord($url,$post){
 function redirectError(){
     header('Location: '.$_SERVER['PHP_SELF']);
     exit();
+}
+
+function getParam($param){
+    return $_POST[$param] ?? $_GET[$param] ?? null;
 }

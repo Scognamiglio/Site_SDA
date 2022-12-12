@@ -29,8 +29,8 @@ a:link{
 }
 
 div[role="dialog"]{
-    width: 33em!important;
-    height: 20em!important;
+    width: 1em;
+    height: 1em;
 }
 
 .my{

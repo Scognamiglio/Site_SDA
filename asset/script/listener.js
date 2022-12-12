@@ -88,6 +88,7 @@ $('#popin_login > #go').click(function () {
             psw:$('input[name="psw"]').val()
         }
     }).done(function ($r) {
+        console.log($r);
         json = JSON.parse($r)
         if(json[0] == 'erreur'){
             alert(json[1].replace('\\n','\n'));

@@ -31,6 +31,7 @@ function setCookie(name, value, days) {
 }
 
 function htmlDecode(input){
+    input = input.replaceAll('\\\\&quot;','\\&quot;')
     var e = document.createElement('textarea');
     e.innerHTML = input;
     // handle case of empty input

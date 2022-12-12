@@ -41,11 +41,10 @@ function checkForCookie($label){
 
 
 
-$sql = "select label,value from botExtra where label in ('vPrimaire','race')";
+$sql = "select label,value from botExtra where label in ('vAll','race')";
 foreach ($bdd->query($sql)->fetchAll() as $json) {
     $selectAndOption[$json['label']] = json_decode($json['value'], true);
 }
-$selectAndOption['vSecondaire'] = $selectAndOption['vPrimaire'];
 
 $sql = "select label,value from botExtra where label='raceByVoie'";
 $raceByVoie = json_decode($bdd->query($sql)->fetch()['value'], true);
@@ -141,25 +140,26 @@ if (isset($_POST['act'])) {
 }
 
 
-function SelectFor($type)
+function SelectFor($type, $realName = null)
 {
     global $selectAndOption;
     if (!empty($selectAndOption[$type])) {
-        return genereSelect($selectAndOption[$type], $type);
+        return genereSelect($selectAndOption[$type], $type, $realName);
     } else {
         false;
     }
 
 }
 
-function genereSelect($array, $name)
+function genereSelect($array, $name, $realName = null)
 {
+    $realName = $realName ?? $name;
     global $dataUseDefault;
     $rep = function ($a) {
         return str_replace(["'", "<br>"], ['&#39;', '&#10;'], $a);
     };
 
-    $ret = "<select class='TheSelect' name='$name'><option value='' style='display: none'>Choisis</option>";
+    $ret = "<select class='TheSelect' name='$realName'><option value='' style='display: none'>Choisis</option>";
     foreach ($array as $option => $title) {
         $ckeck = isset($dataUseDefault[$name]) && $option == $dataUseDefault[$name] ? 'selected' : '';
         $ret .= "<option required value='$option' title='" . $rep($title) . "' $ckeck>$option</option>";

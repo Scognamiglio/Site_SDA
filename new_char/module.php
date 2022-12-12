@@ -38,11 +38,11 @@
         </tr>
 
         <tr class="step-2">
-            <td><label>Voie primaire</label></td><td><?=SelectFor('vPrimaire')?></td>
+            <td><label>Voie primaire</label></td><td><?=SelectFor('vAll','vPrimaire')?></td>
             <td><a class="info" id="vPrimaire">info</a></td>
         </tr>
         <tr class="step-2">
-            <td><label>Voie secondaire</label></td><td><?=SelectFor('vSecondaire')?></td>
+            <td><label>Voie secondaire</label></td><td><?=SelectFor('vAll','vSecondaire')?></td>
             <td><a class="info" id="vSecondaire">info</a></td>
         </tr>
 
